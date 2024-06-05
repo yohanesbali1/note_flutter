@@ -4,8 +4,10 @@ part of "pages.dart";
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    context.read<PageBloc>().add(GoToMainPage());
     return BlocBuilder<PageBloc, PageState>(
-        builder: (_, pageState) =>
-            (pageState is OnMainPage) ? const MainPage() : const SplashPage());
+        builder: (_, pageState) => (pageState is OnSplashPage)
+            ? const SplashPage()
+            : const MainPage());
   }
 }

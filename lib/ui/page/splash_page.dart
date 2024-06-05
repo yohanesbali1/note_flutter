@@ -19,15 +19,16 @@ class SplashPageState extends State<SplashPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            // Container(
-            //   height: 136,
-            //   decoration: const BoxDecoration(
-            //       image: DecorationImage(image: AssetImage("assets/logo.png"))),
-            // ),
             Container(
-              margin: const EdgeInsets.only(top: 70, bottom: 16),
+              height: 198,
+              decoration: const BoxDecoration(
+                  image:
+                      DecorationImage(image: AssetImage("assets/splash.png"))),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 42, bottom: 16),
               child: Text(
-                "Selamat Datang di CopasApps",
+                "Selamat Datang di\nCopasApps",
                 style: blackTextFont.copyWith(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
@@ -45,10 +46,22 @@ class SplashPageState extends State<SplashPage> {
               width: 250,
               margin: const EdgeInsets.only(top: 70, bottom: 19),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: mainColor),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(mainColor),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                      const EdgeInsets.symmetric(vertical: 14),
+                    )),
                 child: Text('Get Started',
-                    style: whiteTextFont.copyWith(fontSize: 16)),
-                onPressed: () {},
+                    style: whiteTextFont.copyWith(
+                        fontSize: 16, fontWeight: FontWeight.w500)),
+                onPressed: () {
+                  context.read<PageBloc>().add(GoToMainPage());
+                },
               ),
             ),
           ],
