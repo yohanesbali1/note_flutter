@@ -1,13 +1,24 @@
 part of "pages.dart";
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final int bottomNavBarIndex;
+  const MainPage({super.key, required this.bottomNavBarIndex});
 
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
+  late int bottomNavBarIndex;
+  late PageController pageController;
+  @override
+  void initState() {
+    super.initState();
+
+    bottomNavBarIndex = widget.bottomNavBarIndex;
+    pageController = PageController(initialPage: bottomNavBarIndex);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +73,7 @@ class _MainPageState extends State<MainPage> {
                             ),
                             textAlign: TextAlign.left,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 7,
                           ),
                           Text(
@@ -85,6 +96,30 @@ class _MainPageState extends State<MainPage> {
                     ],
                   ),
                 ),
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.only(top: 32, bottom: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Penginputan Terakhir",
+                        style: mainTextFont.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        "Lihat Semua",
+                        style: blackTextFont.copyWith(
+                            fontSize: 11, fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
+                  ),
+                ),
+                TransactionListWidget(bottomNavBarIndex, pageController),
               ]),
         ));
   }
