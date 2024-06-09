@@ -8,6 +8,8 @@ class Wrapper extends StatelessWidget {
     return BlocBuilder<PageBloc, PageState>(
         builder: (_, pageState) => (pageState is OnSplashPage)
             ? const SplashPage()
-            : const MainPage());
+            : (pageState is OnMainPage)
+                ? MainPage(bottomNavBarIndex: pageState.bottomNavBarIndex)
+                : Container());
   }
 }

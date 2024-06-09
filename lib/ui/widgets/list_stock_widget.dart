@@ -1,7 +1,7 @@
 part of 'widgets.dart';
 
-class TransactionListWidget extends StatelessWidget {
-  const TransactionListWidget({super.key});
+class ListStockPage extends StatelessWidget {
+  const ListStockPage({super.key});
 
   @override
   Widget build(BuildContext context) {
