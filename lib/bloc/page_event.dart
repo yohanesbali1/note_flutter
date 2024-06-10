@@ -10,7 +10,7 @@ class GoToSplashPage extends PageEvent {
   List<Object> get props => [];
 }
 
-class GoToProductPage extends PageEvent {
+class GoToFormStockPage extends PageEvent {
   @override
   // TODO: implement props
   List<Object> get props => [];

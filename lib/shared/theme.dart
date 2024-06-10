@@ -6,6 +6,7 @@ Color accentColor1 = const Color(0xFF2c1f63);
 Color accentColor2 = const Color(0xFFEBF1FD);
 Color accentColor3 = const Color(0xFF3B3B3B);
 Color accentColor4 = const Color(0xFFF7F7F7);
+Color accentColor5 = const Color(0xFFE4E4E4);
 
 TextStyle blackTextFont = GoogleFonts.raleway().copyWith(color: Colors.black);
 TextStyle whiteTextFont = GoogleFonts.raleway().copyWith(color: Colors.white);

@@ -11,3 +11,4 @@ part 'main_page.dart';
 part 'dashboard_page.dart';
 part 'note_page.dart';
 part 'stock_page.dart';
+part 'form_stock_page.dart';

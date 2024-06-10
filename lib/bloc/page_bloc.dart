@@ -7,7 +7,7 @@ part 'page_state.dart';
 class PageBloc extends Bloc<PageEvent, PageState> {
   PageBloc() : super(OnInitialPage()) {
     on<GoToSplashPage>((event, emit) => emit(OnSplashPage()));
-    on<GoToProductPage>((event, emit) => emit(OnProductPage()));
+    on<GoToFormStockPage>((event, emit) => emit(OnFromStockPage()));
     on<GoToMainPage>((event, emit) => emit(OnMainPage(
         bottomNavBarIndex: event.bottomNavBarIndex,
         isExpired: event.isExpired)));

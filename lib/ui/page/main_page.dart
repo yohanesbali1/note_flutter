@@ -84,7 +84,11 @@ class _MainPageState extends State<MainPage> {
             child: FloatingActionButton(
               shape: const CircleBorder(),
               elevation: 0.1,
-              onPressed: () {},
+              onPressed: () {
+                if (bottomNavBarIndex == 1) {
+                  context.read<PageBloc>().add(GoToFormStockPage());
+                }
+              },
               backgroundColor: mainColor,
               child: Icon(
                 MdiIcons.fromString('plus'),

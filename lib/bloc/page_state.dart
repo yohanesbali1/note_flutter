@@ -16,7 +16,7 @@ class OnSplashPage extends PageState {
   List<Object> get props => [];
 }
 
-class OnProductPage extends PageState {
+class OnFromStockPage extends PageState {
   @override
   // TODO: implement props
   List<Object> get props => [];
