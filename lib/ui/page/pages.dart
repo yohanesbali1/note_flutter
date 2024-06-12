@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nota/bloc/bloc.dart';
+import 'package:nota/database/database.dart';
+import 'package:nota/models/models.dart';
 import 'package:nota/shared/shared.dart';
 import 'package:nota/ui/widgets/widgets.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';

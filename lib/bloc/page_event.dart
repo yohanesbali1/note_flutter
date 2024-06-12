@@ -11,7 +11,9 @@ class GoToSplashPage extends PageEvent {
 }
 
 class GoToFormStockPage extends PageEvent {
+  final ProductModel? productModel;
   @override
+  GoToFormStockPage(this.productModel);
   // TODO: implement props
   List<Object> get props => [];
 }

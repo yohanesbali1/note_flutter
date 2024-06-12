@@ -5,7 +5,7 @@ class ProductDB {
 
   Future<void> createTable(Database database) async {
     await database.execute("""CREATE TABLE IF NOT EXISTS $tablename(
-      "id" INTEGER NOT NULL,
+      "id" AUTOINCREMENT NOT NULL,
       "name" VARCHAR(99) NOT NULL,
       "qty" INTEGER NOT NULL,
       "created_at" INTEGER NOT NULL DEFAULT (cast(strftime('%s', 'now') as INTEGER)),
@@ -14,16 +14,16 @@ class ProductDB {
     );""");
   }
 
-  Future<List<ProductCollection>> getAll() async {
+  Future<List<ProductModel>> getAll() async {
     final database = await DatabaseService().database;
     final todos = await database.rawQuery('''SELECT * FROM $tablename''');
-    return todos.map((e) => ProductCollection.fromJson(e)).toList();
+    return todos.map((e) => ProductModel.fromJson(e)).toList();
   }
 
   Future<int> create({required String name, required int qty}) async {
     final database = await DatabaseService().database;
     return await database.rawInsert(
-        '''INSERT IN TO $tablename (name, qty,created_at,updated_at) VALUES (?, ?,?,?)''',
+        '''INSERT INTO $tablename (name, qty,created_at,updated_at) VALUES (?, ?,?,?)''',
         [
           name,
           qty,

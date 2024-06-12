@@ -10,11 +10,11 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   late int bottomNavBarIndex;
+
   late PageController pageController;
   @override
   void initState() {
     super.initState();
-
     bottomNavBarIndex = widget.bottomNavBarIndex;
     pageController = PageController(initialPage: bottomNavBarIndex);
   }
@@ -86,7 +86,7 @@ class _MainPageState extends State<MainPage> {
               elevation: 0.1,
               onPressed: () {
                 if (bottomNavBarIndex == 1) {
-                  context.read<PageBloc>().add(GoToFormStockPage());
+                  context.read<PageBloc>().add(GoToFormStockPage(null));
                 }
               },
               backgroundColor: mainColor,

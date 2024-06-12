@@ -9,6 +9,20 @@ class StockPage extends StatefulWidget {
 
 class _StockPageState extends State<StockPage> {
   TextEditingController searchController = TextEditingController();
+  Future<List<ProductModel>>? futureProduct;
+  final productDB = ProductDB();
+  @override
+  void initState() {
+    futureProductModel();
+  }
+
+  @override
+  void futureProductModel() {
+    setState(() {
+      futureProduct = productDB.getAll();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -40,7 +54,17 @@ class _StockPageState extends State<StockPage> {
                 labelText: "Cari",
               ),
             )),
-        const ListStockPage()
+        FutureBuilder(
+            future: futureProduct,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                final data = snapshot.data!;
+                return data.isEmpty ? const Center(child: Text('Tidak ada data  ')) : ListStockPage()
+              }
+            }),
+        
       ],
     );
   }
