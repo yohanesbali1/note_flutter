@@ -1,25 +1,25 @@
 part of 'pages.dart';
 
-class FormStock extends StatefulWidget {
-  final ProductModel? productModel;
-  const FormStock(this.productModel);
+class FormCompany extends StatefulWidget {
+  final CompanyModel? companyModel;
+  const FormCompany(this.companyModel);
 
   @override
-  State<FormStock> createState() => _FormStockState();
+  State<FormCompany> createState() => _FormCompanyState();
 }
 
-class _FormStockState extends State<FormStock> {
-  final productDB = ProductDB();
+class _FormCompanyState extends State<FormCompany> {
+  final companyDB = CompanyDB();
   var id = 0;
   TextEditingController nameController = TextEditingController();
-  TextEditingController qtyController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    id = widget.productModel?.id ?? 0;
-    nameController.text = widget.productModel?.name ?? "";
-    qtyController.text = widget.productModel?.qty.toString() ?? "";
+    id = widget.companyModel?.id ?? 0;
+    nameController.text = widget.companyModel?.name ?? "";
+    addressController.text = widget.companyModel?.address ?? "";
   }
 
   @override
@@ -81,8 +81,8 @@ class _FormStockState extends State<FormStock> {
                     height: 20,
                   ),
                   TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: qtyController,
+                    maxLength: 8,
+                    controller: addressController,
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 13),
@@ -117,19 +117,19 @@ class _FormStockState extends State<FormStock> {
                             fontSize: 16, fontWeight: FontWeight.w500)),
                     onPressed: () async {
                       if (id == 0) {
-                        await productDB.create(
+                        await companyDB.create(
                             name: nameController.text,
-                            qty: int.parse(qtyController.text));
+                            address: addressController.text);
                       } else {
-                        await productDB.update(
+                        await companyDB.update(
                             id: id,
                             name: nameController.text,
-                            qty: int.parse(qtyController.text));
+                            address: addressController.text);
                       }
                       if (!mounted) return;
                       context
                           .read<PageBloc>()
-                          .add(GoToMainPage(bottomNavBarIndex: 1));
+                          .add(GoToMainPage(bottomNavBarIndex: 2));
                     },
                   ),
                 ))

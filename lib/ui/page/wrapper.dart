@@ -12,6 +12,8 @@ class Wrapper extends StatelessWidget {
                 ? MainPage(bottomNavBarIndex: pageState.bottomNavBarIndex)
                 : (pageState is OnFormStockPage)
                     ? FormStock(pageState.productModel)
-                    : Container());
+                    : (pageState is OnFormCompanyPage)
+                        ? FormCompany(pageState.companyModel)
+                        : Container());
   }
 }

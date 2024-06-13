@@ -1,38 +1,36 @@
 part of "pages.dart";
 
-class StockPage extends StatefulWidget {
-  StockPage({super.key});
+class CompanyPage extends StatefulWidget {
+  CompanyPage({super.key});
 
   @override
-  State<StockPage> createState() => _StockPageState();
+  State<CompanyPage> createState() => _CompanyPageState();
 }
 
-class _StockPageState extends State<StockPage> {
+class _CompanyPageState extends State<CompanyPage> {
   TextEditingController searchController = TextEditingController();
-  Future<List<ProductModel>>? futureProduct;
-  final productDB = ProductDB();
+  Future<List<CompanyModel>>? futureCompany;
+  final companyDB = CompanyDB();
   @override
   void initState() {
-    futureProductModel();
+    futureCompanyModel();
   }
 
   @override
-  void futureProductModel() {
+  void futureCompanyModel() {
     setState(() {
-      futureProduct = productDB.getAll();
+      futureCompany = companyDB.getAll();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return ListView(
-      //
-
       children: <Widget>[
         Container(
           alignment: Alignment.center,
           child: Text(
-            "Stock",
+            "Perusahaan",
             style: mainTextFont.copyWith(
                 fontSize: 16, fontWeight: FontWeight.w700),
             textAlign: TextAlign.center,
@@ -59,12 +57,12 @@ class _StockPageState extends State<StockPage> {
         Container(
           padding: EdgeInsets.symmetric(horizontal: defaultMargin),
           child: FutureBuilder(
-              future: futureProduct,
+              future: futureCompany,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 } else {
-                  final data = snapshot.data!;
+                  final data = snapshot.data ?? [];
                   return data.isEmpty
                       ? const Center(child: Text('Tidak ada data  '))
                       : ListStockPage(data);

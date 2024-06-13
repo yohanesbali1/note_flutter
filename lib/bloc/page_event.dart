@@ -18,6 +18,14 @@ class GoToFormStockPage extends PageEvent {
   List<Object> get props => [];
 }
 
+class GoToFormCompanyPage extends PageEvent {
+  final CompanyModel? companyModel;
+  @override
+  GoToFormCompanyPage(this.companyModel);
+  // TODO: implement props
+  List<Object> get props => [];
+}
+
 class GoToMainPage extends PageEvent {
   final int bottomNavBarIndex;
   final bool isExpired;

@@ -10,6 +10,8 @@ class PageBloc extends Bloc<PageEvent, PageState> {
     on<GoToSplashPage>((event, emit) => emit(OnSplashPage()));
     on<GoToFormStockPage>(
         (event, emit) => emit(OnFormStockPage(event.productModel)));
+    on<GoToFormCompanyPage>(
+        (event, emit) => emit(OnFormCompanyPage(event.companyModel)));
     on<GoToMainPage>((event, emit) => emit(OnMainPage(
         bottomNavBarIndex: event.bottomNavBarIndex,
         isExpired: event.isExpired)));

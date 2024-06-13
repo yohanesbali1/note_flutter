@@ -22,7 +22,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: backgroundColor,
         body: Container(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -33,6 +33,7 @@ class _MainPageState extends State<MainPage> {
                 ),
                 Expanded(
                   child: PageView(
+                    physics: NeverScrollableScrollPhysics(),
                     controller: pageController,
                     onPageChanged: (index) {
                       setState(() {
@@ -42,7 +43,7 @@ class _MainPageState extends State<MainPage> {
                     children: <Widget>[
                       DashboardPage(),
                       StockPage(),
-                      NotePage(),
+                      CompanyPage(),
                       NotePage(),
                     ],
                   ),
@@ -85,8 +86,15 @@ class _MainPageState extends State<MainPage> {
               shape: const CircleBorder(),
               elevation: 0.1,
               onPressed: () {
-                if (bottomNavBarIndex == 1) {
-                  context.read<PageBloc>().add(GoToFormStockPage(null));
+                switch (bottomNavBarIndex) {
+                  case 1:
+                    return context
+                        .read<PageBloc>()
+                        .add(GoToFormStockPage(null));
+                  case 2:
+                    return context
+                        .read<PageBloc>()
+                        .add(GoToFormCompanyPage(null));
                 }
               },
               backgroundColor: mainColor,
@@ -101,11 +109,11 @@ class _MainPageState extends State<MainPage> {
             child: Container(
                 height: 60,
                 decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                    color: Colors.white),
                 child: Container(
                   height: 10,
                   decoration: BoxDecoration(

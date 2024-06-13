@@ -24,6 +24,14 @@ class OnFormStockPage extends PageState {
   List<Object> get props => [];
 }
 
+class OnFormCompanyPage extends PageState {
+  final CompanyModel? companyModel;
+  @override
+  OnFormCompanyPage(this.companyModel);
+  // TODO: implement props
+  List<Object> get props => [];
+}
+
 class OnMainPage extends PageState {
   final int bottomNavBarIndex;
   final bool isExpired;
