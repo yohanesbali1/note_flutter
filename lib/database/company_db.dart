@@ -5,7 +5,7 @@ class CompanyDB {
 
   Future<void> createTable(Database database) async {
     await database.execute("""CREATE TABLE IF NOT EXISTS $tablename(
-      "id" AUTOINCREMENT NOT NULL,
+      "id" INTEGER NOT NULL,
       "name" VARCHAR(99) NOT NULL,
       "address" VARCHAR(99) NOT NULL,
       "created_at" INTEGER NOT NULL DEFAULT (cast(strftime('%s', 'now') as INTEGER)),
@@ -23,9 +23,10 @@ class CompanyDB {
   Future<int> create({required String name, required String address}) async {
     final database = await DatabaseService().database;
     return await database.rawInsert(
-        '''INSERT INTO $tablename (name,address created_at,updated_at) VALUES (?,?,?,?)''',
+        '''INSERT INTO $tablename (name,address,created_at,updated_at) VALUES (?,?,?,?)''',
         [
           name,
+          address,
           DateTime.now().millisecondsSinceEpoch,
           DateTime.now().millisecondsSinceEpoch
         ]);

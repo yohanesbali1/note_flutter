@@ -65,7 +65,7 @@ class _CompanyPageState extends State<CompanyPage> {
                   final data = snapshot.data ?? [];
                   return data.isEmpty
                       ? const Center(child: Text('Tidak ada data  '))
-                      : ListStockPage(data);
+                      : ListCompanyPage(data, companyDB, futureCompanyModel);
                 }
               }),
         )

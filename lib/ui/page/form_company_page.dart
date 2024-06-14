@@ -81,16 +81,18 @@ class _FormCompanyState extends State<FormCompany> {
                     height: 20,
                   ),
                   TextFormField(
-                    maxLength: 8,
+                    maxLines: 8,
+                    textAlignVertical: TextAlignVertical.top,
                     controller: addressController,
                     decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 13),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(width: 1)),
-                      labelText: "Jumlah ",
-                    ),
+                        floatingLabelAlignment: FloatingLabelAlignment.start,
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 13),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(width: 1)),
+                        labelText: "Alamat ",
+                        hintText: "Masukan alamat"),
                   ),
                 ],
               ),
@@ -116,6 +118,10 @@ class _FormCompanyState extends State<FormCompany> {
                         style: whiteTextFont.copyWith(
                             fontSize: 16, fontWeight: FontWeight.w500)),
                     onPressed: () async {
+                      if (nameController.text.isEmpty ||
+                          addressController.text.isEmpty) {
+                        return;
+                      }
                       if (id == 0) {
                         await companyDB.create(
                             name: nameController.text,

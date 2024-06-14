@@ -11,7 +11,7 @@ class DatabaseService {
   }
 
   Future<String> get fullPath async {
-    const name = "todo.db";
+    const name = "note.db";
     final path = await getDatabasesPath();
     return join(path, name);
   }
@@ -23,6 +23,8 @@ class DatabaseService {
     return database;
   }
 
-  Future<void> create(Database database, int version) async =>
-      await ProductDB().createTable(database);
+  Future<void> create(Database database, int version) async {
+    await ProductDB().createTable(database);
+    await CompanyDB().createTable(database);
+  }
 }

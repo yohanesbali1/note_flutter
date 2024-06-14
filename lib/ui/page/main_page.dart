@@ -41,7 +41,7 @@ class _MainPageState extends State<MainPage> {
                       });
                     },
                     children: <Widget>[
-                      DashboardPage(),
+                      const DashboardPage(),
                       StockPage(),
                       CompanyPage(),
                       NotePage(),
@@ -177,8 +177,8 @@ class _MainPageState extends State<MainPage> {
                               child: Column(
                                 children: [
                                   Image.asset((bottomNavBarIndex == 2)
-                                      ? "assets/icon/archive.png"
-                                      : "assets/icon/archive.png"),
+                                      ? "assets/icon/company.png"
+                                      : "assets/icon/company.png"),
                                   Text('Vila',
                                       style: mainTextFont.copyWith(
                                           fontSize: 12,

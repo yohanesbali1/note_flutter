@@ -116,6 +116,10 @@ class _FormStockState extends State<FormStock> {
                         style: whiteTextFont.copyWith(
                             fontSize: 16, fontWeight: FontWeight.w500)),
                     onPressed: () async {
+                      if (nameController.text.isEmpty ||
+                          qtyController.text.isEmpty) {
+                        return;
+                      }
                       if (id == 0) {
                         await productDB.create(
                             name: nameController.text,
