@@ -32,6 +32,22 @@ class OnFormCompanyPage extends PageState {
   List<Object> get props => [];
 }
 
+class OnFormTransactionPage extends PageState {
+  final TransactionModel? transactionModel;
+  @override
+  OnFormTransactionPage(this.transactionModel);
+  // TODO: implement props
+  List<Object> get props => [];
+}
+
+class OnFormTransactionDetailPage extends PageState {
+  final TransactionDetailModel? transactiondetailModel;
+  @override
+  OnFormTransactionDetailPage(this.transactiondetailModel);
+  // TODO: implement props
+  List<Object> get props => [];
+}
+
 class OnMainPage extends PageState {
   final int bottomNavBarIndex;
   final bool isExpired;

@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-part 'payment_models.dart';
 part 'product_models.dart';
-part 'history_models.dart';
 part 'company_model.dart';
+part 'transaction_model.dart';
+part 'transaction_detail_model.dart';

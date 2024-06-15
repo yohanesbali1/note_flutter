@@ -6,6 +6,7 @@ import 'package:nota/models/models.dart';
 import 'package:nota/shared/shared.dart';
 import 'package:nota/ui/widgets/widgets.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:sqflite/sqflite.dart';
 
 part 'wrapper.dart';
 part 'splash_page.dart';
@@ -16,3 +17,6 @@ part 'stock_page.dart';
 part 'form_stock_page.dart';
 part 'company_page.dart';
 part 'form_company_page.dart';
+part 'transaction_page.dart';
+part 'form_transaction_page.dart';
+part 'form_transaction_detail_page.dart';

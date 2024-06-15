@@ -44,7 +44,7 @@ class _MainPageState extends State<MainPage> {
                       const DashboardPage(),
                       StockPage(),
                       CompanyPage(),
-                      NotePage(),
+                      TransactionPage(),
                     ],
                   ),
                 ),
@@ -95,6 +95,10 @@ class _MainPageState extends State<MainPage> {
                     return context
                         .read<PageBloc>()
                         .add(GoToFormCompanyPage(null));
+                  default:
+                    return context
+                        .read<PageBloc>()
+                        .add(GoToFormTransactionPage(null));
                 }
               },
               backgroundColor: mainColor,
@@ -107,12 +111,12 @@ class _MainPageState extends State<MainPage> {
           ClipPath(
             clipper: BottomNavBarClipper(),
             child: Container(
-                height: 60,
+                height: 68,
                 decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
+                    // borderRadius: BorderRadius.only(
+                    //   topLeft: Radius.circular(20),
+                    //   topRight: Radius.circular(20),
+                    // ),
                     color: Colors.white),
                 child: Container(
                   height: 10,
@@ -130,18 +134,19 @@ class _MainPageState extends State<MainPage> {
                             });
                           },
                           icon: Container(
-                              height: 40,
                               child: Column(
-                                children: [
-                                  Image.asset((bottomNavBarIndex == 0)
-                                      ? "assets/icon/home.png"
-                                      : "assets/icon/home.png"),
-                                  Text('Home',
-                                      style: mainTextFont.copyWith(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500))
-                                ],
-                              ))),
+                            children: [
+                              Icon(
+                                Icons.home_outlined,
+                                size: 28,
+                                color: mainColor,
+                              ),
+                              Text('Home',
+                                  style: mainTextFont.copyWith(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600))
+                            ],
+                          ))),
                       IconButton(
                           onPressed: () {
                             setState(() {
@@ -150,20 +155,21 @@ class _MainPageState extends State<MainPage> {
                             });
                           },
                           icon: Container(
-                              height: 40,
                               child: Column(
-                                children: [
-                                  Image.asset((bottomNavBarIndex == 1)
-                                      ? "assets/icon/archive.png"
-                                      : "assets/icon/archive.png"),
-                                  Text('Stok',
-                                      style: mainTextFont.copyWith(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500))
-                                ],
-                              ))),
+                            children: [
+                              Icon(
+                                Icons.archive_outlined,
+                                size: 28,
+                                color: mainColor,
+                              ),
+                              Text('Stok',
+                                  style: mainTextFont.copyWith(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600))
+                            ],
+                          ))),
                       Container(
-                        width: 30,
+                        width: 45,
                       ),
                       IconButton(
                           onPressed: () {
@@ -173,18 +179,19 @@ class _MainPageState extends State<MainPage> {
                             });
                           },
                           icon: Container(
-                              height: 40,
                               child: Column(
-                                children: [
-                                  Image.asset((bottomNavBarIndex == 2)
-                                      ? "assets/icon/company.png"
-                                      : "assets/icon/company.png"),
-                                  Text('Vila',
-                                      style: mainTextFont.copyWith(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500))
-                                ],
-                              ))),
+                            children: [
+                              Icon(
+                                Icons.villa_outlined,
+                                size: 28,
+                                color: mainColor,
+                              ),
+                              Text('Vila',
+                                  style: mainTextFont.copyWith(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600))
+                            ],
+                          ))),
                       IconButton(
                           onPressed: () {
                             setState(() {
@@ -193,18 +200,19 @@ class _MainPageState extends State<MainPage> {
                             });
                           },
                           icon: Container(
-                              height: 40,
                               child: Column(
-                                children: [
-                                  Image.asset((bottomNavBarIndex == 3)
-                                      ? "assets/icon/note.png"
-                                      : "assets/icon/note.png"),
-                                  Text('Note',
-                                      style: mainTextFont.copyWith(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500))
-                                ],
-                              ))),
+                            children: [
+                              Icon(
+                                Icons.note_outlined,
+                                size: 28,
+                                color: mainColor,
+                              ),
+                              Text('Note',
+                                  style: mainTextFont.copyWith(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600))
+                            ],
+                          ))),
                     ],
                   ),
                 )

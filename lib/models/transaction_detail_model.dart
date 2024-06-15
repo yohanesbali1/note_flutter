@@ -1,18 +1,24 @@
 part of "models.dart";
 
-class PaymentCollection extends Equatable {
-  final String name;
-  final double qty;
-  final double jumlah;
+class TransactionDetailModel {
+  final int id;
+  final int id_transaction;
+  final int product_id;
+  final int amont;
+  final double price;
 
-  const PaymentCollection(
-      {required this.name, required this.qty, required this.jumlah});
-  factory PaymentCollection.fromJson(Map<String, dynamic> json) {
-    return PaymentCollection(
-        name: json['name'], qty: json['data'], jumlah: json['total']);
+  TransactionDetailModel(
+      {required this.id,
+      required this.id_transaction,
+      required this.product_id,
+      required this.amont,
+      required this.price});
+  factory TransactionDetailModel.fromJson(Map<String, dynamic> json) {
+    return TransactionDetailModel(
+        id: json['id'],
+        id_transaction: json['id_transaction'],
+        product_id: json['product_id'],
+        amont: json['amont'],
+        price: json['price']);
   }
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => [name, qty, jumlah];
 }
