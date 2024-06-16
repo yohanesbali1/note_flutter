@@ -9,12 +9,9 @@ Color accentColor4 = const Color(0xFFF7F7F7);
 Color accentColor5 = const Color(0xFFE4E4E4);
 Color backgroundColor = const Color(0xFfF9F9F9);
 
-TextStyle blackTextFont = GoogleFonts.raleway().copyWith(color: Colors.black);
-TextStyle whiteTextFont = GoogleFonts.raleway().copyWith(color: Colors.white);
-TextStyle mainTextFont = GoogleFonts.raleway().copyWith(color: mainColor);
-TextStyle grayTextFont = GoogleFonts.raleway().copyWith(color: accentColor3);
-
-TextStyle whiteNumberFont =
-    GoogleFonts.openSans().copyWith(color: Colors.white);
-TextStyle yellowNumberFont =
-    GoogleFonts.raleway().copyWith(color: accentColor2);
+TextStyle blackTextFont =
+    GoogleFonts.montserrat().copyWith(color: Colors.black);
+TextStyle whiteTextFont =
+    GoogleFonts.montserrat().copyWith(color: Colors.white);
+TextStyle mainTextFont = GoogleFonts.montserrat().copyWith(color: mainColor);
+TextStyle grayTextFont = GoogleFonts.montserrat().copyWith(color: accentColor3);

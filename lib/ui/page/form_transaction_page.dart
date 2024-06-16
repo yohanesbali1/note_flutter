@@ -11,14 +11,24 @@ class FormTransaction extends StatefulWidget {
 class _FormTransactionState extends State<FormTransaction> {
   final companyDB = CompanyDB();
   var id = 0;
-  var company_id = "";
-  TextEditingController nameController = TextEditingController();
+  var transaction_detail = [];
+  int? _selectedValue;
+  List<CompanyModel> companies = [];
+
+  TextEditingController no_transaction = TextEditingController();
   TextEditingController company_idController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
 
   @override
   void initState() {
-    super.initState();
-    id = widget.transaction_model?.id ?? 0;
+    get_company();
+  }
+
+  Future<void> get_company() async {
+    var data = await companyDB.getAll();
+    setState(() {
+      companies = data;
+    });
   }
 
   @override
@@ -66,34 +76,54 @@ class _FormTransactionState extends State<FormTransaction> {
                   ),
                   Container(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Vila"),
+                        Text(
+                          "Vila",
+                          style: blackTextFont.copyWith(
+                              fontSize: 14, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
                         DropdownButtonFormField(
                           onChanged: (newValue) {
                             setState(() {
                               // company_id = newValue;
-                              company_idController.text = newValue.toString();
+                              // company_idController.text = newValue.toString();
+                              // _selectedValue = newValue;
+
+                              print(newValue);
                               //   // _currentSelectedValue = newValue;
                               //   // state.didChange(newValue);
                             });
                           },
-                          value: company_idController.text,
-                          items: [
-                            DropdownMenuItem(
-                              child: Text('test'),
-                              value: '1',
-                            )
-                          ],
-                          // controller: nameController,
-                          // decoration: InputDecoration(
-                          //   contentPadding:
-                          //       EdgeInsets.symmetric(vertical: 10, horizontal: 13),
-                          //   border: OutlineInputBorder(
-                          //       borderRadius: BorderRadius.circular(10),
-                          //       borderSide: const BorderSide(width: 1)),
-                          //   labelText: "Nama Produk ",
-                          //   hintText: "Masukan nama produk",
-                          // ),
+                          value: _selectedValue,
+                          items: companies.map<DropdownMenuItem<int>>((value) {
+                            return DropdownMenuItem<int>(
+                              value: value.id,
+                              child: Text(
+                                value.name,
+                                style: mainTextFont.copyWith(
+                                    fontSize: 16, fontWeight: FontWeight.w400),
+                              ),
+                            );
+                          }).toList(),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 13),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  width: 1, color: Colors.black),
+                            ),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                    width: 1, color: Colors.black)),
+                            hintText: "Pilih vila",
+                          ),
                         )
                       ],
                     ),
@@ -101,20 +131,40 @@ class _FormTransactionState extends State<FormTransaction> {
                   const SizedBox(
                     height: 20,
                   ),
-                  // TextFormField(
-                  //   maxLines: 8,
-                  //   textAlignVertical: TextAlignVertical.top,
-                  //   controller: addressController,
-                  //   decoration: InputDecoration(
-                  //       floatingLabelAlignment: FloatingLabelAlignment.start,
-                  //       contentPadding:
-                  //           EdgeInsets.symmetric(vertical: 10, horizontal: 13),
-                  //       border: OutlineInputBorder(
-                  //           borderRadius: BorderRadius.circular(10),
-                  //           borderSide: const BorderSide(width: 1)),
-                  //       labelText: "Alamat ",
-                  //       hintText: "Masukan alamat"),
-                  // ),
+                  Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Vila",
+                          style: blackTextFont.copyWith(
+                              fontSize: 14, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        TextFormField(
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(2101));
+                          },
+                          controller: dateController,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 13),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(width: 1)),
+                            labelText: "Nama Produk ",
+                            hintText: "Masukan nama produk",
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -139,24 +189,25 @@ class _FormTransactionState extends State<FormTransaction> {
                         style: whiteTextFont.copyWith(
                             fontSize: 16, fontWeight: FontWeight.w500)),
                     onPressed: () async {
-                      if (nameController.text.isEmpty ||
-                          addressController.text.isEmpty) {
-                        return;
-                      }
-                      if (id == 0) {
-                        await companyDB.create(
-                            name: nameController.text,
-                            address: addressController.text);
-                      } else {
-                        await companyDB.update(
-                            id: id,
-                            name: nameController.text,
-                            address: addressController.text);
-                      }
-                      if (!mounted) return;
-                      context
-                          .read<PageBloc>()
-                          .add(GoToMainPage(bottomNavBarIndex: 2));
+                      // if (no_transaction.text.isEmpty ||
+                      //     company_idController.text.isEmpty ||
+                      //     transaction_detail.length == 0) {
+                      //   return;
+                      // }
+                      // if (id == 0) {
+                      //   await companyDB.create(
+                      //       name: nameController.text,
+                      //       address: addressController.text);
+                      // } else {
+                      //   await companyDB.update(
+                      //       id: id,
+                      //       name: nameController.text,
+                      //       address: addressController.text);
+                      // }
+                      // if (!mounted) return;
+                      // context
+                      //     .read<PageBloc>()
+                      //     .add(GoToMainPage(bottomNavBarIndex: 2));
                     },
                   ),
                 ))
