@@ -11,9 +11,9 @@ class FormTransaction extends StatefulWidget {
 class _FormTransactionState extends State<FormTransaction> {
   final companyDB = CompanyDB();
   var id = 0;
-  var transaction_detail = [];
   int? _selectedValue;
   List<CompanyModel> companies = [];
+  List<TransactionDetailModel> transaction_detail = [];
 
   TextEditingController no_transaction = TextEditingController();
   TextEditingController company_idController = TextEditingController();
@@ -22,6 +22,15 @@ class _FormTransactionState extends State<FormTransaction> {
   @override
   void initState() {
     get_company();
+    dateController.text =
+        DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now());
+  }
+
+  @override
+  void change_transaction_detail(payload) {
+    setState(() {
+      transaction_detail.addAll(payload);
+    });
   }
 
   Future<void> get_company() async {
@@ -137,7 +146,7 @@ class _FormTransactionState extends State<FormTransaction> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Vila",
+                          "Tanggal",
                           style: blackTextFont.copyWith(
                               fontSize: 14, fontWeight: FontWeight.w600),
                         ),
@@ -155,16 +164,31 @@ class _FormTransactionState extends State<FormTransaction> {
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 13),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  width: 1, color: Colors.black),
+                            ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                borderSide: const BorderSide(width: 1)),
-                            labelText: "Nama Produk ",
-                            hintText: "Masukan nama produk",
+                                borderSide: const BorderSide(
+                                    width: 1, color: Colors.black)),
+                            hintText: "Masukan tanggal transaksi",
                           ),
                         ),
                       ],
                     ),
                   ),
+                  Container(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<PageBloc>()
+                            .add(GoToMainPage(bottomNavBarIndex: 2));
+                      },
+                      child: Text('asd'),
+                    ),
+                  )
                 ],
               ),
             ),
