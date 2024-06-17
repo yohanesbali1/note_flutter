@@ -182,11 +182,29 @@ class _FormTransactionState extends State<FormTransaction> {
                   Container(
                     child: ElevatedButton(
                       onPressed: () {
-                        context
-                            .read<PageBloc>()
-                            .add(GoToMainPage(bottomNavBarIndex: 2));
+                        showModalBottomSheet<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SizedBox(
+                              height: 300,
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    const Text('Modal BottomSheet'),
+                                    ElevatedButton(
+                                      child: const Text('Close BottomSheet'),
+                                      onPressed: () => Navigator.pop(context),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
                       },
-                      child: Text('asd'),
+                      child: Text('Tambah Data'),
                     ),
                   )
                 ],
