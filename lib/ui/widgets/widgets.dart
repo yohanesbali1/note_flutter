@@ -11,3 +11,4 @@ part "list_stock_widget.dart";
 part "list_company_widget.dart";
 part "list_transaction_widget.dart";
 part "list_transaction_detail.dart";
+part "modal_form_transaction_detail.dart";

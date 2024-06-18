@@ -13,7 +13,8 @@ class _FormTransactionState extends State<FormTransaction> {
   var id = 0;
   int? _selectedValue;
   List<CompanyModel> companies = [];
-  List<TransactionDetailModel> transaction_detail = [];
+
+  List<void> transaction_detail = [];
 
   TextEditingController no_transaction = TextEditingController();
   TextEditingController company_idController = TextEditingController();
@@ -29,7 +30,7 @@ class _FormTransactionState extends State<FormTransaction> {
   @override
   void change_transaction_detail(payload) {
     setState(() {
-      transaction_detail.addAll(payload);
+      transaction_detail.add(payload);
     });
   }
 
@@ -75,6 +76,26 @@ class _FormTransactionState extends State<FormTransaction> {
                             style: mainTextFont.copyWith(
                                 fontSize: 16, fontWeight: FontWeight.w700),
                             textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet<void>(
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SizedBox(
+                                    height: 600,
+                                    width: double.infinity,
+                                    child: ModalTransactionDetail(
+                                        change_transaction_detail),
+                                  );
+                                },
+                              );
+                            },
+                            child: Icon(Icons.add_rounded, color: Colors.black),
                           ),
                         )
                       ],
@@ -179,34 +200,155 @@ class _FormTransactionState extends State<FormTransaction> {
                       ],
                     ),
                   ),
-                  Container(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        showModalBottomSheet<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return SizedBox(
-                              height: 300,
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    const Text('Modal BottomSheet'),
-                                    ElevatedButton(
-                                      child: const Text('Close BottomSheet'),
-                                      onPressed: () => Navigator.pop(context),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      child: Text('Tambah Data'),
-                    ),
-                  )
+                  SizedBox(
+                      width: double.infinity,
+                      height: 420,
+                      child: ListView.separated(
+                        padding: const EdgeInsets.all(8),
+                        itemCount: transaction_detail.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            Slidable(
+                                endActionPane: ActionPane(
+                                    motion: const ScrollMotion(),
+                                    children: [
+                                      CustomSlidableAction(
+                                          autoClose: true,
+                                          backgroundColor: Colors.green,
+                                          onPressed: (context) {},
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(Icons.edit),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                "Edit",
+                                                style: mainTextFont.copyWith(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                                // style: mainTextFont.copyWith(fontSize: 12),
+                                              )
+                                            ],
+                                          )),
+                                      CustomSlidableAction(
+                                          autoClose: true,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          backgroundColor: Colors.red,
+                                          onPressed: (context) {
+                                            showDialog(
+                                                context: context,
+                                                builder: (BuildContext
+                                                        context) =>
+                                                    AlertDialog(
+                                                      title: Text(
+                                                        'Apakah anda yakin?',
+                                                        style: blackTextFont
+                                                            .copyWith(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                      ),
+                                                      content: Text(
+                                                        'Data akan terhapus secara permanen!',
+                                                        style: blackTextFont
+                                                            .copyWith(
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400),
+                                                      ),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  context,
+                                                                  'Cancel'),
+                                                          child: Text(
+                                                            'Batal',
+                                                            style: blackTextFont
+                                                                .copyWith(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed:
+                                                              () async {},
+                                                          child: Text(
+                                                            'OK',
+                                                            style: blackTextFont
+                                                                .copyWith(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ));
+                                          },
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(Icons.delete_forever),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                "Delete",
+                                                style: mainTextFont.copyWith(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                                // style: mainTextFont.copyWith(fontSize: 12),
+                                              )
+                                            ],
+                                          )),
+                                    ]),
+                                child: Container(
+                                  decoration:
+                                      BoxDecoration(color: Colors.white),
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.only(
+                                      top: 25, bottom: 25, left: 22, right: 22),
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          transaction_detail[index].name,
+                                          style: mainTextFont.copyWith(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        Text(
+                                          transaction_detail[index].address,
+                                          style: whiteTextFont.copyWith(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12,
+                                              color: mainColor),
+                                        )
+                                      ]),
+                                )),
+                        separatorBuilder: (BuildContext context, int index) =>
+                            SizedBox(
+                          height: 10,
+                        ),
+                      ))
                 ],
               ),
             ),
