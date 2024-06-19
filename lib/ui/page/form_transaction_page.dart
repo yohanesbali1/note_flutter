@@ -10,11 +10,14 @@ class FormTransaction extends StatefulWidget {
 
 class _FormTransactionState extends State<FormTransaction> {
   final companyDB = CompanyDB();
+  final transactionDB = TransactionDB();
+  final productDB = ProductDB();
   var id = 0;
   int? _selectedValue;
-  List<CompanyModel> companies = [];
+  List<CompanyModel> company_data = [];
+  List<ProductModel> product_data = [];
 
-  List<void> transaction_detail = [];
+  List<TransactionDetailFormModel> transaction_detail = [];
 
   TextEditingController no_transaction = TextEditingController();
   TextEditingController company_idController = TextEditingController();
@@ -22,7 +25,8 @@ class _FormTransactionState extends State<FormTransaction> {
 
   @override
   void initState() {
-    get_company();
+    getData();
+    print(transaction_detail.length);
     dateController.text =
         DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now());
   }
@@ -34,12 +38,17 @@ class _FormTransactionState extends State<FormTransaction> {
     });
   }
 
-  Future<void> get_company() async {
-    var data = await companyDB.getAll();
+  Future<void> getData() async {
+    var data_company = await companyDB.getAll();
+    var data_product = await productDB.getAll();
     setState(() {
-      companies = data;
+      company_data = data_company;
+      product_data = data_product;
     });
   }
+
+  ProductModel show_product(id) =>
+      product_data.firstWhere((item) => item.id == id);
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +99,8 @@ class _FormTransactionState extends State<FormTransaction> {
                                     height: 600,
                                     width: double.infinity,
                                     child: ModalTransactionDetail(
-                                        change_transaction_detail),
+                                        change_transaction_detail,
+                                        product_data),
                                   );
                                 },
                               );
@@ -130,7 +140,8 @@ class _FormTransactionState extends State<FormTransaction> {
                             });
                           },
                           value: _selectedValue,
-                          items: companies.map<DropdownMenuItem<int>>((value) {
+                          items:
+                              company_data.map<DropdownMenuItem<int>>((value) {
                             return DropdownMenuItem<int>(
                               value: value.id,
                               child: Text(
@@ -240,62 +251,11 @@ class _FormTransactionState extends State<FormTransaction> {
                                               horizontal: 10),
                                           backgroundColor: Colors.red,
                                           onPressed: (context) {
-                                            showDialog(
-                                                context: context,
-                                                builder: (BuildContext
-                                                        context) =>
-                                                    AlertDialog(
-                                                      title: Text(
-                                                        'Apakah anda yakin?',
-                                                        style: blackTextFont
-                                                            .copyWith(
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
-                                                      ),
-                                                      content: Text(
-                                                        'Data akan terhapus secara permanen!',
-                                                        style: blackTextFont
-                                                            .copyWith(
-                                                                fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                      ),
-                                                      actions: <Widget>[
-                                                        TextButton(
-                                                          onPressed: () =>
-                                                              Navigator.pop(
-                                                                  context,
-                                                                  'Cancel'),
-                                                          child: Text(
-                                                            'Batal',
-                                                            style: blackTextFont
-                                                                .copyWith(
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        TextButton(
-                                                          onPressed:
-                                                              () async {},
-                                                          child: Text(
-                                                            'OK',
-                                                            style: blackTextFont
-                                                                .copyWith(
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ));
+                                            transaction_detail.removeAt(index);
+                                            setState(() {
+                                              transaction_detail =
+                                                  transaction_detail;
+                                            });
                                           },
                                           child: Column(
                                             mainAxisAlignment:
@@ -330,13 +290,20 @@ class _FormTransactionState extends State<FormTransaction> {
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          transaction_detail[index].name,
+                                          show_product(transaction_detail[index]
+                                                  .product_id)
+                                              .name,
+                                          // transaction_detail[index].id,
                                           style: mainTextFont.copyWith(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w600),
                                         ),
                                         Text(
-                                          transaction_detail[index].address,
+                                          show_product(transaction_detail[index]
+                                                  .product_id)
+                                              .qty
+                                              .toString(),
+                                          // transaction_detail[index].address,
                                           style: whiteTextFont.copyWith(
                                               fontWeight: FontWeight.w400,
                                               fontSize: 12,

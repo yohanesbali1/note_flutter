@@ -2,7 +2,8 @@ part of 'widgets.dart';
 
 class ModalTransactionDetail extends StatefulWidget {
   final change_transaction_detail;
-  ModalTransactionDetail(this.change_transaction_detail);
+  final List<ProductModel> product_data;
+  ModalTransactionDetail(this.change_transaction_detail, this.product_data);
 
   @override
   State<ModalTransactionDetail> createState() => _ModalTransactionDetailState();
@@ -10,25 +11,11 @@ class ModalTransactionDetail extends StatefulWidget {
 
 class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
   final productDB = ProductDB();
-  List<ProductModel> product_data = [];
 
   int? product_value;
   TextEditingController qtyController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController finalController = TextEditingController();
-
-  @override
-  void initState() {
-    get_product();
-  }
-
-  @override
-  Future<void> get_product() async {
-    var data = await productDB.getAll();
-    setState(() {
-      product_data = data;
-    });
-  }
 
   Future<void> cont_price(qty, price) async {
     qty = qty == "" ? "0" : qty;
@@ -79,7 +66,7 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
                                 hintStyle: blackTextFont.copyWith(
                                     fontSize: 16, fontWeight: FontWeight.w400)),
                             value: product_value,
-                            items: product_data
+                            items: widget.product_data
                                 .map<DropdownMenuItem<int>>((value) {
                               return DropdownMenuItem<int>(
                                 value: value.id,
@@ -201,12 +188,11 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
                             if (product_value == null ||
                                 qtyController.text == '' ||
                                 priceController.text == '') {}
-                            widget.change_transaction_detail({
-                              'product_id': product_value,
-                              'qty': qtyController.text,
-                              'price': priceController.text,
-                              'final_price': finalController.text
-                            });
+                            widget.change_transaction_detail(
+                                TransactionDetailFormModel(
+                                    product_id: product_value ?? 0,
+                                    amount: int.parse(qtyController.text),
+                                    price: double.parse(priceController.text)));
                             Navigator.pop(context);
                           },
                         ),

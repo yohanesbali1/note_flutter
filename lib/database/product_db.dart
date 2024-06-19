@@ -20,6 +20,13 @@ class ProductDB {
     return todos.map((e) => ProductModel.fromJson(e)).toList();
   }
 
+  Future<List<ProductModel>> show(payload) async {
+    final database = await DatabaseService().database;
+    final todos = await database
+        .rawQuery('''SELECT * FROM $tablename where id=$payload ''');
+    return todos.map((e) => ProductModel.fromJson(e)).toList();
+  }
+
   Future<int> create({required String name, required int qty}) async {
     final database = await DatabaseService().database;
     return await database.rawInsert(

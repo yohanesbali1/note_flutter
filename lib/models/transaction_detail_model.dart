@@ -24,16 +24,10 @@ class TransactionDetailModel {
 }
 
 class TransactionDetailFormModel {
-  final int id;
-  final int id_transaction;
   final int product_id;
   final int amount;
   final double price;
 
   TransactionDetailFormModel(
-      {required this.id,
-      required this.id_transaction,
-      required this.product_id,
-      required this.price,
-      required this.amount});
+      {required this.product_id, required this.price, required this.amount});
 }
