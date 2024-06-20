@@ -1,4 +1,4 @@
-part of 'widgets.dart';
+part of "modal.dart";
 
 class ModalTransactionDetail extends StatefulWidget {
   final change_transaction_detail;

@@ -56,9 +56,9 @@ class _FormTransactionState extends State<FormTransaction> {
       backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
               child: Column(
@@ -91,16 +91,21 @@ class _FormTransactionState extends State<FormTransaction> {
                           alignment: Alignment.centerRight,
                           child: GestureDetector(
                             onTap: () {
-                              showModalBottomSheet<void>(
-                                isScrollControlled: true,
+                              showModalBottomSheet(
                                 context: context,
+                                isScrollControlled:
+                                    true, // Allow bottom sheet to be scroll controlled
                                 builder: (BuildContext context) {
-                                  return SizedBox(
-                                    height: 600,
-                                    width: double.infinity,
-                                    child: ModalTransactionDetail(
-                                        change_transaction_detail,
-                                        product_data),
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: MediaQuery.of(context)
+                                          .viewInsets
+                                          .bottom,
+                                    ),
+                                    child: SingleChildScrollView(
+                                        child: ModalTransactionDetail(
+                                            change_transaction_detail,
+                                            product_data)),
                                   );
                                 },
                               );
@@ -214,108 +219,7 @@ class _FormTransactionState extends State<FormTransaction> {
                   SizedBox(
                       width: double.infinity,
                       height: 420,
-                      child: ListView.separated(
-                        padding: const EdgeInsets.all(8),
-                        itemCount: transaction_detail.length,
-                        itemBuilder: (BuildContext context, int index) =>
-                            Slidable(
-                                endActionPane: ActionPane(
-                                    motion: const ScrollMotion(),
-                                    children: [
-                                      CustomSlidableAction(
-                                          autoClose: true,
-                                          backgroundColor: Colors.green,
-                                          onPressed: (context) {},
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(Icons.edit),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                "Edit",
-                                                style: mainTextFont.copyWith(
-                                                    color: Colors.white,
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                                // style: mainTextFont.copyWith(fontSize: 12),
-                                              )
-                                            ],
-                                          )),
-                                      CustomSlidableAction(
-                                          autoClose: true,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          backgroundColor: Colors.red,
-                                          onPressed: (context) {
-                                            transaction_detail.removeAt(index);
-                                            setState(() {
-                                              transaction_detail =
-                                                  transaction_detail;
-                                            });
-                                          },
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(Icons.delete_forever),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                "Delete",
-                                                style: mainTextFont.copyWith(
-                                                    color: Colors.white,
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                                // style: mainTextFont.copyWith(fontSize: 12),
-                                              )
-                                            ],
-                                          )),
-                                    ]),
-                                child: Container(
-                                  decoration:
-                                      BoxDecoration(color: Colors.white),
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.only(
-                                      top: 25, bottom: 25, left: 22, right: 22),
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          show_product(transaction_detail[index]
-                                                  .product_id)
-                                              .name,
-                                          // transaction_detail[index].id,
-                                          style: mainTextFont.copyWith(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                        Text(
-                                          show_product(transaction_detail[index]
-                                                  .product_id)
-                                              .qty
-                                              .toString(),
-                                          // transaction_detail[index].address,
-                                          style: whiteTextFont.copyWith(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12,
-                                              color: mainColor),
-                                        )
-                                      ]),
-                                )),
-                        separatorBuilder: (BuildContext context, int index) =>
-                            SizedBox(
-                          height: 10,
-                        ),
-                      ))
+                      child: )
                 ],
               ),
             ),
