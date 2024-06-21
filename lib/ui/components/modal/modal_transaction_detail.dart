@@ -3,7 +3,9 @@ part of "modal.dart";
 class ModalTransactionDetail extends StatefulWidget {
   final change_transaction_detail;
   final List<ProductModel> product_data;
-  ModalTransactionDetail(this.change_transaction_detail, this.product_data);
+  final List<TransactionDetailFormModel>? transaction_detail_data;
+  ModalTransactionDetail(this.change_transaction_detail, this.product_data,
+      this.transaction_detail_data);
 
   @override
   State<ModalTransactionDetail> createState() => _ModalTransactionDetailState();
@@ -16,6 +18,14 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
   TextEditingController qtyController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController finalController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    qtyController.text = widget.transaction_detail_data?.product_id ?? "";
+    priceController.text = widget.transaction_detail_data?.amount ?? "";
+    finalController.text = widget.transaction_detail_data?.price ?? "";
+  }
 
   Future<void> cont_price(qty, price) async {
     qty = qty == "" ? "0" : qty;
@@ -192,7 +202,8 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
                                 TransactionDetailFormModel(
                                     product_id: product_value ?? 0,
                                     amount: int.parse(qtyController.text),
-                                    price: double.parse(priceController.text)));
+                                    price: double.parse(priceController.text)),
+                                'tambah');
                             Navigator.pop(context);
                           },
                         ),

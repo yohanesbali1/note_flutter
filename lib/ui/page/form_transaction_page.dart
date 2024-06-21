@@ -26,16 +26,30 @@ class _FormTransactionState extends State<FormTransaction> {
   @override
   void initState() {
     getData();
-    print(transaction_detail.length);
     dateController.text =
         DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now());
   }
 
   @override
-  void change_transaction_detail(payload) {
-    setState(() {
-      transaction_detail.add(payload);
-    });
+  void change_transaction_detail(payload, status) {
+    switch (status) {
+      case 'tambah':
+        setState(() {
+          transaction_detail.add(payload);
+        });
+        break;
+      case 'edit':
+        setState(() {
+          transaction_detail
+              .replaceRange(payload.index, payload.index + 1, [payload]);
+        });
+        break;
+      case 'hapus':
+        setState(() {
+          transaction_detail.removeAt(payload.index);
+        });
+        break;
+    }
   }
 
   Future<void> getData() async {
@@ -57,8 +71,6 @@ class _FormTransactionState extends State<FormTransaction> {
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: defaultMargin),
         child: ListView(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          // crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
               child: Column(
@@ -219,7 +231,11 @@ class _FormTransactionState extends State<FormTransaction> {
                   SizedBox(
                       width: double.infinity,
                       height: 420,
-                      child: )
+                      child: ListTransactionDetail(
+                          transaction_detail,
+                          change_transaction_detail,
+                          product_data,
+                          show_product))
                 ],
               ),
             ),
