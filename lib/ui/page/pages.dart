@@ -22,4 +22,3 @@ part 'company_page.dart';
 part 'form_company_page.dart';
 part 'transaction_page.dart';
 part 'form_transaction_page.dart';
-part 'form_transaction_detail_page.dart';

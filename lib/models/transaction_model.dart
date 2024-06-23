@@ -2,20 +2,20 @@ part of "models.dart";
 
 class TransactionModel {
   final int id;
-  final String no_transaction;
   final int company_id;
-  final DateTime date;
+  final String? company_name;
+  final String date;
 
   TransactionModel(
       {required this.id,
-      required this.no_transaction,
       required this.company_id,
-      required this.date});
+      required this.date,
+      this.company_name});
   factory TransactionModel.fromJson(Map<String, dynamic> json) {
     return TransactionModel(
         id: json['id'],
-        no_transaction: json['no_transaction'],
         company_id: json['company_id'],
-        date: json['date']);
+        date: json['date'],
+        company_name: json['company_name']);
   }
 }

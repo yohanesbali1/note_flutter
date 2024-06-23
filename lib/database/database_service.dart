@@ -27,6 +27,5 @@ class DatabaseService {
     await ProductDB().createTable(database);
     await CompanyDB().createTable(database);
     await TransactionDB().createTable(database);
-    await TransactionDetailDB().createTable(database);
   }
 }

@@ -6,4 +6,3 @@ part 'database_service.dart';
 part 'product_db.dart';
 part 'company_db.dart';
 part 'transaction_db.dart';
-part 'transaction_detail_db.dart';

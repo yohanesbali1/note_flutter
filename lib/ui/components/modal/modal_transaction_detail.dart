@@ -3,9 +3,10 @@ part of "modal.dart";
 class ModalTransactionDetail extends StatefulWidget {
   final change_transaction_detail;
   final List<ProductModel> product_data;
-  final List<TransactionDetailFormModel>? transaction_detail_data;
+  final TransactionDetailModel? transaction_detail_data;
+  final int? id;
   ModalTransactionDetail(this.change_transaction_detail, this.product_data,
-      this.transaction_detail_data);
+      this.transaction_detail_data, this.id);
 
   @override
   State<ModalTransactionDetail> createState() => _ModalTransactionDetailState();
@@ -13,7 +14,6 @@ class ModalTransactionDetail extends StatefulWidget {
 
 class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
   final productDB = ProductDB();
-
   int? product_value;
   TextEditingController qtyController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -22,9 +22,15 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
   @override
   void initState() {
     super.initState();
-    qtyController.text = widget.transaction_detail_data?.product_id ?? "";
-    priceController.text = widget.transaction_detail_data?.amount ?? "";
-    finalController.text = widget.transaction_detail_data?.price ?? "";
+    if (widget.transaction_detail_data != null) {
+      product_value = widget.transaction_detail_data?.product_id ?? 0;
+      qtyController.text =
+          widget.transaction_detail_data?.amount.toString() ?? "";
+      priceController.text =
+          widget.transaction_detail_data?.price.round().toString() ?? "";
+
+      cont_price(qtyController.text, priceController.text);
+    }
   }
 
   Future<void> cont_price(qty, price) async {
@@ -198,12 +204,26 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
                             if (product_value == null ||
                                 qtyController.text == '' ||
                                 priceController.text == '') {}
-                            widget.change_transaction_detail(
-                                TransactionDetailFormModel(
-                                    product_id: product_value ?? 0,
-                                    amount: int.parse(qtyController.text),
-                                    price: double.parse(priceController.text)),
-                                'tambah');
+                            if (widget.transaction_detail_data == null) {
+                              widget.change_transaction_detail(
+                                  TransactionDetailModel(
+                                      product_id: product_value ?? 0,
+                                      amount: int.parse(qtyController.text),
+                                      price:
+                                          double.parse(priceController.text)),
+                                  'tambah',
+                                  null);
+                            } else {
+                              widget.change_transaction_detail(
+                                  // widget.transaction_detail_data,
+                                  TransactionDetailModel(
+                                      product_id: product_value ?? 0,
+                                      amount: int.parse(qtyController.text),
+                                      price:
+                                          double.parse(priceController.text)),
+                                  'ubah',
+                                  widget.id);
+                            }
                             Navigator.pop(context);
                           },
                         ),

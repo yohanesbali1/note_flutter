@@ -12,41 +12,34 @@ class _FormTransactionState extends State<FormTransaction> {
   final companyDB = CompanyDB();
   final transactionDB = TransactionDB();
   final productDB = ProductDB();
-  var id = 0;
-  int? _selectedValue;
   List<CompanyModel> company_data = [];
   List<ProductModel> product_data = [];
 
-  List<TransactionDetailFormModel> transaction_detail = [];
-
-  TextEditingController no_transaction = TextEditingController();
-  TextEditingController company_idController = TextEditingController();
+  int? company_id;
+  List<TransactionDetailModel> transaction_detail = [];
   TextEditingController dateController = TextEditingController();
 
   @override
   void initState() {
     getData();
-    dateController.text =
-        DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now());
   }
 
   @override
-  void change_transaction_detail(payload, status) {
+  void change_transaction_detail(payload, status, index) {
     switch (status) {
       case 'tambah':
         setState(() {
           transaction_detail.add(payload);
         });
         break;
-      case 'edit':
+      case 'ubah':
         setState(() {
-          transaction_detail
-              .replaceRange(payload.index, payload.index + 1, [payload]);
+          transaction_detail.replaceRange(index, index + 1, [payload]);
         });
         break;
       case 'hapus':
         setState(() {
-          transaction_detail.removeAt(payload.index);
+          transaction_detail.removeAt(index);
         });
         break;
     }
@@ -55,14 +48,43 @@ class _FormTransactionState extends State<FormTransaction> {
   Future<void> getData() async {
     var data_company = await companyDB.getAll();
     var data_product = await productDB.getAll();
+    List<TransactionDetailModel> transaction_detail_data = [];
+    if (widget.transaction_model != null)
+      transaction_detail_data =
+          await transactionDB.getdetail(widget.transaction_model!.id);
     setState(() {
       company_data = data_company;
       product_data = data_product;
+      dateController.text = widget.transaction_model?.date ?? "";
+      company_id = widget.transaction_model?.company_id;
+      transaction_detail = transaction_detail_data;
     });
   }
 
   ProductModel show_product(id) =>
       product_data.firstWhere((item) => item.id == id);
+
+  Future<void> submit(int? id) async {
+    if (company_id == null ||
+        transaction_detail.length == 0 ||
+        dateController.text.isEmpty) {
+      return;
+    }
+    if (widget.transaction_model == null) {
+      await transactionDB.create(
+          company_id: company_id!,
+          date: dateController.text,
+          transaction_detail: transaction_detail);
+    } else {
+      await transactionDB.update(
+          id: id!,
+          company_id: company_id!,
+          date: dateController.text,
+          transaction_detail: transaction_detail);
+    }
+    if (!mounted) return;
+    context.read<PageBloc>().add(GoToMainPage(bottomNavBarIndex: 2));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +139,9 @@ class _FormTransactionState extends State<FormTransaction> {
                                     child: SingleChildScrollView(
                                         child: ModalTransactionDetail(
                                             change_transaction_detail,
-                                            product_data)),
+                                            product_data,
+                                            null,
+                                            null)),
                                   );
                                 },
                               );
@@ -147,16 +171,10 @@ class _FormTransactionState extends State<FormTransaction> {
                         DropdownButtonFormField(
                           onChanged: (newValue) {
                             setState(() {
-                              // company_id = newValue;
-                              // company_idController.text = newValue.toString();
-                              // _selectedValue = newValue;
-
-                              print(newValue);
-                              //   // _currentSelectedValue = newValue;
-                              //   // state.didChange(newValue);
+                              company_id = newValue;
                             });
                           },
-                          value: _selectedValue,
+                          value: company_id,
                           items:
                               company_data.map<DropdownMenuItem<int>>((value) {
                             return DropdownMenuItem<int>(
@@ -206,8 +224,13 @@ class _FormTransactionState extends State<FormTransaction> {
                           onTap: () async {
                             DateTime? pickedDate = await showDatePicker(
                                 context: context,
-                                firstDate: DateTime.now(),
+                                firstDate: DateTime(2020),
                                 lastDate: DateTime(2101));
+                            setState(() {
+                              dateController.text = DateFormat('yyyy-MM-dd')
+                                  .format(pickedDate!)
+                                  .toString();
+                            });
                           },
                           controller: dateController,
                           decoration: InputDecoration(
@@ -260,25 +283,7 @@ class _FormTransactionState extends State<FormTransaction> {
                         style: whiteTextFont.copyWith(
                             fontSize: 16, fontWeight: FontWeight.w500)),
                     onPressed: () async {
-                      // if (no_transaction.text.isEmpty ||
-                      //     company_idController.text.isEmpty ||
-                      //     transaction_detail.length == 0) {
-                      //   return;
-                      // }
-                      // if (id == 0) {
-                      //   await companyDB.create(
-                      //       name: nameController.text,
-                      //       address: addressController.text);
-                      // } else {
-                      //   await companyDB.update(
-                      //       id: id,
-                      //       name: nameController.text,
-                      //       address: addressController.text);
-                      // }
-                      // if (!mounted) return;
-                      // context
-                      //     .read<PageBloc>()
-                      //     .add(GoToMainPage(bottomNavBarIndex: 2));
+                      submit(widget.transaction_model?.id ?? null);
                     },
                   ),
                 ))

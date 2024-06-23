@@ -2,67 +2,123 @@ part of 'database.dart';
 
 class TransactionDB {
   final tablename = 'transcation';
+  final tablename_join = 'transcation_detail';
+  final tablename_company = 'company';
 
   Future<void> createTable(Database database) async {
     await database.execute("""CREATE TABLE IF NOT EXISTS $tablename(
       "id" INTEGER NOT NULL,
-      "no_transaction" VARCHAR(99) NOT NULL,
       "company_id" INTEGER NOT NULL,
-      "date" DATETIME NOT NULL,
+      "date" STRING NOT NULL,
       "created_at" INTEGER NOT NULL DEFAULT (cast(strftime('%s', 'now') as INTEGER)),
       "updated_at" INTEGER NOT NULL DEFAULT (cast(strftime('%s', 'now') as INTEGER)),
       PRIMARY KEY("id" AUTOINCREMENT),
       CONSTRAINT FK_Company FOREIGN KEY (company_id)
       REFERENCES company(id)
     );""");
+    await database.execute("""CREATE TABLE IF NOT EXISTS $tablename_join(
+      "id" INTEGER NOT NULL,
+      "id_transaction" INTEGER NOT NULL,
+      "product_id" INTEGER NOT NULL,
+      "amount" INTEGER NOT NULL,
+      "price" DOUBLE NOT NULL,
+      "created_at" INTEGER NOT NULL DEFAULT (cast(strftime('%s', 'now') as INTEGER)),
+      "updated_at" INTEGER NOT NULL DEFAULT (cast(strftime('%s', 'now') as INTEGER)),
+      PRIMARY KEY("id" AUTOINCREMENT),
+      CONSTRAINT FK_Product FOREIGN KEY (product_id)
+      REFERENCES product(id),
+      CONSTRAINT FK_Transaction FOREIGN KEY (id_transaction)
+      REFERENCES transcation(id)
+    );""");
   }
 
-  Future<List<CompanyModel>> getAll() async {
+  Future<List<TransactionModel>> getAll() async {
     final database = await DatabaseService().database;
-    final todos = await database.rawQuery('''SELECT * FROM $tablename''');
-    return todos.map((e) => CompanyModel.fromJson(e)).toList();
+    final todos = await database.rawQuery(
+        '''SELECT *,$tablename_company.name as company_name FROM $tablename INNER JOIN $tablename_company ON $tablename.company_id = $tablename_company.id''');
+    return todos.map((e) => TransactionModel.fromJson(e)).toList();
   }
 
-  Future<int> create(
-      {required String no_transaction,
-      required int company_id,
-      required DateTime date}) async {
+  Future<List<TransactionDetailModel>> getdetail(int id) async {
     final database = await DatabaseService().database;
-    return await database.rawInsert(
-        '''INSERT INTO $tablename (no_transaction,company_id,date,created_at,updated_at) VALUES (?,?,?,?)''',
+    final todos = await database.rawQuery(
+        '''SELECT * FROM $tablename_join where id_transaction = ?''', [id]);
+    return todos.map((e) => TransactionDetailModel.fromJson(e)).toList();
+  }
+
+  Future<void> create(
+      {required int company_id,
+      required String date,
+      required List<TransactionDetailModel> transaction_detail}) async {
+    final database = await DatabaseService().database;
+    int id_transaction = await database.rawInsert(
+        '''INSERT INTO $tablename (company_id,date,created_at,updated_at) VALUES (?,?,?,?)''',
         [
-          no_transaction,
           company_id,
           date,
           DateTime.now().millisecondsSinceEpoch,
           DateTime.now().millisecondsSinceEpoch
         ]);
+    var db = database.batch();
+    for (var data in transaction_detail) {
+      db.rawInsert(
+          '''INSERT INTO $tablename_join (id_transaction,product_id,amount,price,created_at,updated_at) VALUES (?,?,?,?,?,?)''',
+          [
+            id_transaction,
+            data.product_id,
+            data.amount,
+            data.price,
+            DateTime.now().millisecondsSinceEpoch,
+            DateTime.now().millisecondsSinceEpoch
+          ]);
+    }
+    await db.commit();
   }
 
-  Future<int> update(
-      {required int id,
-      required String no_transaction,
-      required int company_id,
-      required DateTime date}) async {
+  Future<void> update(
+      {required int company_id,
+      required String date,
+      required List<TransactionDetailModel> transaction_detail,
+      required int id}) async {
     final database = await DatabaseService().database;
-    return await database.update(
+    await database.update(
       tablename,
-      {
-        "no_transaction": no_transaction,
-        "company_id": company_id,
-        "date": date
-      },
+      {"company_id": company_id, "date": date},
       where: "id = ?",
       conflictAlgorithm: ConflictAlgorithm.rollback,
       whereArgs: [id],
     );
+    await database.delete(
+      tablename_join,
+      where: "id_transaction = ?",
+      whereArgs: [id],
+    );
+    var db = database.batch();
+    for (var data in transaction_detail) {
+      db.rawInsert(
+          '''INSERT INTO $tablename_join (id_transaction,product_id,amount,price,created_at,updated_at) VALUES (?,?,?,?,?,?)''',
+          [
+            id,
+            data.product_id,
+            data.amount,
+            data.price,
+            DateTime.now().millisecondsSinceEpoch,
+            DateTime.now().millisecondsSinceEpoch
+          ]);
+    }
+    await db.commit();
   }
 
-  Future<int> delete({required int id}) async {
+  Future<void> delete({required int id}) async {
     final database = await DatabaseService().database;
-    return await database.delete(
+    await database.delete(
       tablename,
       where: "id = ?",
+      whereArgs: [id],
+    );
+    await database.delete(
+      tablename_join,
+      where: "id_transaction = ?",
       whereArgs: [id],
     );
   }

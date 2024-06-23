@@ -20,6 +20,13 @@ class CompanyDB {
     return todos.map((e) => CompanyModel.fromJson(e)).toList();
   }
 
+  Future<List<CompanyModel>> showData(int id) async {
+    final database = await DatabaseService().database;
+    final todos = await database
+        .rawQuery('''SELECT * FROM $tablename where id = ?''', [id]);
+    return todos.map((e) => CompanyModel.fromJson(e)).toList();
+  }
+
   Future<int> create({required String name, required String address}) async {
     final database = await DatabaseService().database;
     return await database.rawInsert(

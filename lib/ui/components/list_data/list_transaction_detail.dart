@@ -36,7 +36,9 @@ class _ListTransactionDetailState extends State<ListTransactionDetail> {
                         child: SingleChildScrollView(
                             child: ModalTransactionDetail(
                                 widget.change_transaction_detail,
-                                widget.product_data)),
+                                widget.product_data,
+                                widget.transaction_detail[index],
+                                index)),
                       );
                     },
                   );
@@ -63,10 +65,7 @@ class _ListTransactionDetailState extends State<ListTransactionDetail> {
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 backgroundColor: Colors.red,
                 onPressed: (context) {
-                  widget.change_transaction_detail({
-                    ...widget.change_transaction_detail,
-                    index,
-                  }, 'hapus');
+                  widget.change_transaction_detail(null, 'hapus', index);
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -105,11 +104,7 @@ class _ListTransactionDetailState extends State<ListTransactionDetail> {
                         fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   Text(
-                    widget
-                        .show_product(
-                            widget.transaction_detail[index].product_id)
-                        .qty
-                        .toString(),
+                    widget.transaction_detail[index].amount.toString(),
                     // transaction_detail[index].address,
                     style: whiteTextFont.copyWith(
                         fontWeight: FontWeight.w400,

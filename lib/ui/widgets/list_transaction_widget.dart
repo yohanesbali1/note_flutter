@@ -1,11 +1,11 @@
 part of 'widgets.dart';
 
 class ListTransactionPage extends StatelessWidget {
-  final data;
+  final List<TransactionModel> data;
   final TransactionDB transactionDB;
-  final futureCompanyModel;
+  final getDataTransaction;
   const ListTransactionPage(
-      this.data, this.transactionDB, this.futureCompanyModel);
+      this.data, this.transactionDB, this.getDataTransaction);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ListTransactionPage extends StatelessWidget {
                     onPressed: (context) {
                       context
                           .read<PageBloc>()
-                          .add(GoToFormCompanyPage(data[index]));
+                          .add(GoToFormTransactionPage(data[index]));
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -79,7 +79,7 @@ class ListTransactionPage extends StatelessWidget {
                                     onPressed: () async {
                                       await transactionDB.delete(
                                           id: data[index].id);
-                                      futureCompanyModel();
+                                      getDataTransaction();
                                       Navigator.pop(context, 'OK');
                                     },
                                     child: Text(
@@ -121,12 +121,12 @@ class ListTransactionPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        data[index].name,
+                        data[index].company_name ?? "-",
                         style: mainTextFont.copyWith(
                             fontSize: 16, fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        data[index].address,
+                        data[index].date,
                         style: whiteTextFont.copyWith(
                             fontWeight: FontWeight.w400,
                             fontSize: 12,

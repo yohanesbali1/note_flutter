@@ -9,17 +9,17 @@ class TransactionPage extends StatefulWidget {
 
 class _TransactionPageState extends State<TransactionPage> {
   TextEditingController searchController = TextEditingController();
-  Future<List<CompanyModel>>? futureCompany;
+  Future<List<TransactionModel>>? futureTransaction;
   final transactionDB = TransactionDB();
   @override
   void initState() {
-    futureCompanyModel();
+    getDataTransaction();
   }
 
   @override
-  void futureCompanyModel() {
+  void getDataTransaction() {
     setState(() {
-      futureCompany = transactionDB.getAll();
+      futureTransaction = transactionDB.getAll();
     });
   }
 
@@ -57,7 +57,7 @@ class _TransactionPageState extends State<TransactionPage> {
         Container(
           padding: EdgeInsets.symmetric(horizontal: defaultMargin),
           child: FutureBuilder(
-              future: futureCompany,
+              future: futureTransaction,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -66,7 +66,7 @@ class _TransactionPageState extends State<TransactionPage> {
                   return data.isEmpty
                       ? const Center(child: Text('Tidak ada data  '))
                       : ListTransactionPage(
-                          data, transactionDB, futureCompanyModel);
+                          data, transactionDB, getDataTransaction);
                 }
               }),
         )

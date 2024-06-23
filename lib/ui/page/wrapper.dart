@@ -16,9 +16,6 @@ class Wrapper extends StatelessWidget {
                         ? FormCompany(pageState.companyModel)
                         : (pageState is OnFormTransactionPage)
                             ? FormTransaction(pageState.transactionModel)
-                            : (pageState is OnFormTransactionDetailPage)
-                                ? FormTransactionDetail(
-                                    pageState.transactiondetailModel)
-                                : Container());
+                            : Container());
   }
 }
