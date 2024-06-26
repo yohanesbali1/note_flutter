@@ -11,7 +11,7 @@ class SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: bgcolor,
       body: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: defaultMargin),
@@ -29,7 +29,8 @@ class SplashPageState extends State<SplashPage> {
               margin: const EdgeInsets.only(top: 42, bottom: 16),
               child: Text(
                 "Selamat Datang di\nCopasApps",
-                style: blackTextFont.copyWith(
+                style: monseratTextFont.copyWith(
+                  color: textprimary,
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
                 ),
@@ -38,8 +39,8 @@ class SplashPageState extends State<SplashPage> {
             ),
             Text(
               "Buat pencatatan bisnis mu semakin profesional dan cepat",
-              style: grayTextFont.copyWith(
-                  fontSize: 16, fontWeight: FontWeight.w300),
+              style: monseratTextFont.copyWith(
+                  color: text3, fontSize: 16, fontWeight: FontWeight.w300),
               textAlign: TextAlign.center,
             ),
             Container(
@@ -57,8 +58,10 @@ class SplashPageState extends State<SplashPage> {
                       const EdgeInsets.symmetric(vertical: 14),
                     )),
                 child: Text('Get Started',
-                    style: whiteTextFont.copyWith(
-                        fontSize: 16, fontWeight: FontWeight.w500)),
+                    style: monseratTextFont.copyWith(
+                        color: textprimary,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500)),
                 onPressed: () {
                   context.read<PageBloc>().add(GoToMainPage());
                 },

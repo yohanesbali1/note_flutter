@@ -10,65 +10,115 @@ class DashboardPage extends StatelessWidget {
       child: ListView(
         children: [
           Container(
-            alignment: Alignment.center,
+            alignment: Alignment.topLeft,
             child: Text(
-              "Home",
-              style: mainTextFont.copyWith(
-                  fontSize: 16, fontWeight: FontWeight.w700),
+              "Dashboard",
+              style: monseratTextFont.copyWith(
+                  color: textprimary,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700),
               textAlign: TextAlign.center,
             ),
           ),
           Container(
-            width: double.infinity,
-            margin: const EdgeInsets.only(top: 17, bottom: 32),
-            child: Text(
-              "Hi Admin",
-              style: mainTextFont.copyWith(
-                  fontSize: 18, fontWeight: FontWeight.w800),
-              textAlign: TextAlign.left,
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              border: Border.all(color: mainColor, width: 1.5),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            padding:
-                const EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 14),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            margin: EdgeInsets.only(top: 35, bottom: 26),
+            height: 144,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Selamat Datang",
-                      style: mainTextFont.copyWith(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                    const SizedBox(
-                      height: 7,
-                    ),
-                    Text(
-                      "Ayo buat laporanmu Mudah \ndan Menarik",
-                      style: blackTextFont.copyWith(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ],
+                Container(
+                  width: 125,
+                  padding: EdgeInsets.symmetric(vertical: 14, horizontal: 10),
+                  decoration: BoxDecoration(
+                      color: bgcolor2,
+                      borderRadius: BorderRadius.circular(10.0)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                              color: mainColor,
+                              borderRadius: BorderRadius.circular(100)),
+                          child: Container(
+                            width: 26,
+                            height: 26,
+                            child:
+                                Image.asset("assets/icon/archive-yello-bg.png"),
+                          )),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Produk',
+                            style: monseratTextFont.copyWith(
+                                color: text3,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            '24',
+                            style: monseratTextFont.copyWith(
+                                color: textprimary,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
                 Container(
-                  height: 89,
-                  width: 98,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/home_page.png"))),
+                  margin: EdgeInsets.only(left: 16),
+                  width: 125,
+                  padding: EdgeInsets.symmetric(vertical: 14, horizontal: 10),
+                  decoration: BoxDecoration(
+                      color: bgcolor2,
+                      borderRadius: BorderRadius.circular(10.0)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                              color: mainColor,
+                              borderRadius: BorderRadius.circular(100)),
+                          child: Container(
+                            width: 26,
+                            height: 26,
+                            child: Image.asset("assets/icon/note-yello-bg.png"),
+                          )),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Transaksi',
+                            style: monseratTextFont.copyWith(
+                                color: text3,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            '24',
+                            style: monseratTextFont.copyWith(
+                                color: textprimary,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -81,22 +131,25 @@ class DashboardPage extends StatelessWidget {
               children: [
                 Text(
                   "Penginputan Terakhir",
-                  style: mainTextFont.copyWith(
+                  style: monseratTextFont.copyWith(
+                    color: textprimary,
                     fontWeight: FontWeight.w600,
-                    fontSize: 14,
+                    fontSize: 16,
                   ),
                   textAlign: TextAlign.left,
                 ),
                 Text(
                   "Lihat Semua",
-                  style: blackTextFont.copyWith(
-                      fontSize: 11, fontWeight: FontWeight.w600),
+                  style: monseratTextFont.copyWith(
+                      color: mainColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
                   textAlign: TextAlign.left,
                 ),
               ],
             ),
           ),
-          const TransactionListWidget()
+          ListTransaction()
         ],
       ),
     );

@@ -22,9 +22,10 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: backgroundColor,
+        backgroundColor: bgcolor,
         body: Container(
           child: Column(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -42,36 +43,13 @@ class _MainPageState extends State<MainPage> {
                     },
                     children: <Widget>[
                       const DashboardPage(),
-                      StockPage(),
-                      CompanyPage(),
-                      TransactionPage(),
+                      // StockPage(),
+                      // CompanyPage(),
+                      // TransactionPage(),
                     ],
                   ),
                 ),
                 createCustomBottomNavBar(),
-
-                // Align(
-                //   alignment: Alignment.bottomCenter,
-                //   child: Container(
-                //     height: 46,
-                //     width: 46,
-                //     margin: EdgeInsets.only(bottom: 42),
-                //     child: FloatingActionButton(
-                //         elevation: 0,
-                //         backgroundColor: accentColor2,
-                //         child: SizedBox(
-                //           height: 26,
-                //           width: 26,
-                //           child: Icon(
-                //             MdiIcons.fromString('plus'),
-                //             color: Colors.black.withOpacity(0.54),
-                //           ),
-                //         ),
-                //         onPressed: () {
-                //           context.read<PageBloc>().add(GoToMainPage());
-                //         }),
-                //   ),
-                // )
               ]),
         ));
   }
@@ -80,44 +58,39 @@ class _MainPageState extends State<MainPage> {
       alignment: Alignment.bottomCenter,
       child: Stack(
         children: [
-          Center(
-            heightFactor: 0.1,
-            child: FloatingActionButton(
-              shape: const CircleBorder(),
-              elevation: 0.1,
-              onPressed: () {
-                switch (bottomNavBarIndex) {
-                  case 1:
-                    return context
-                        .read<PageBloc>()
-                        .add(GoToFormStockPage(null));
-                  case 2:
-                    return context
-                        .read<PageBloc>()
-                        .add(GoToFormCompanyPage(null));
-                  default:
-                    return context
-                        .read<PageBloc>()
-                        .add(GoToFormTransactionPage(null));
-                }
-              },
-              backgroundColor: mainColor,
-              child: Icon(
-                MdiIcons.fromString('plus'),
-                color: Colors.white,
-              ),
-            ),
-          ),
+          // Center(
+          //   heightFactor: 0.1,
+          //   child: FloatingActionButton(
+          //     shape: const CircleBorder(),
+          //     elevation: 0.1,
+          //     onPressed: () {
+          //       switch (bottomNavBarIndex) {
+          //         case 1:
+          //           return context
+          //               .read<PageBloc>()
+          //               .add(GoToFormStockPage(null));
+          //         case 2:
+          //           return context
+          //               .read<PageBloc>()
+          //               .add(GoToFormCompanyPage(null));
+          //         default:
+          //           return context
+          //               .read<PageBloc>()
+          //               .add(GoToFormTransactionPage(null));
+          //       }
+          //     },
+          //     backgroundColor: mainColor,
+          //     child: Icon(
+          //       MdiIcons.fromString('plus'),
+          //       color: Colors.white,
+          //     ),
+          //   ),
+          // ),
           ClipPath(
-            clipper: BottomNavBarClipper(),
+            // clipper: BottomNavBarClipper(),
             child: Container(
                 height: 68,
-                decoration: const BoxDecoration(
-                    // borderRadius: BorderRadius.only(
-                    //   topLeft: Radius.circular(20),
-                    //   topRight: Radius.circular(20),
-                    // ),
-                    color: Colors.white),
+                decoration: const BoxDecoration(color: Color(0xFF2C2E30)),
                 child: Container(
                   height: 10,
                   decoration: BoxDecoration(
@@ -135,16 +108,26 @@ class _MainPageState extends State<MainPage> {
                           },
                           icon: Container(
                               child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.home_outlined,
-                                size: 28,
-                                color: mainColor,
-                              ),
+                              Container(
+                                  width: 24,
+                                  margin: EdgeInsetsDirectional.only(bottom: 4),
+                                  height: 24,
+                                  child: Container(
+                                    width: 24,
+                                    height: 24,
+                                    child: Image.asset(bottomNavBarIndex == 0
+                                        ? "assets/icon/home-active.png"
+                                        : "assets/icon/home.png"),
+                                  )),
                               Text('Home',
-                                  style: mainTextFont.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600))
+                                  style: monseratTextFont.copyWith(
+                                      color: bottomNavBarIndex == 0
+                                          ? mainColor
+                                          : text2,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500))
                             ],
                           ))),
                       IconButton(
@@ -156,21 +139,25 @@ class _MainPageState extends State<MainPage> {
                           },
                           icon: Container(
                               child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.archive_outlined,
-                                size: 28,
-                                color: mainColor,
-                              ),
+                              Container(
+                                  width: 24,
+                                  margin: EdgeInsetsDirectional.only(bottom: 4),
+                                  height: 24,
+                                  child: Container(
+                                    width: 24,
+                                    height: 24,
+                                    child:
+                                        Image.asset("assets/icon/archive.png"),
+                                  )),
                               Text('Stok',
-                                  style: mainTextFont.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600))
+                                  style: monseratTextFont.copyWith(
+                                      color: text2,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500))
                             ],
                           ))),
-                      Container(
-                        width: 45,
-                      ),
                       IconButton(
                           onPressed: () {
                             setState(() {
@@ -180,16 +167,22 @@ class _MainPageState extends State<MainPage> {
                           },
                           icon: Container(
                               child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.villa_outlined,
-                                size: 28,
-                                color: mainColor,
-                              ),
+                              Container(
+                                  width: 24,
+                                  margin: EdgeInsetsDirectional.only(bottom: 4),
+                                  height: 24,
+                                  child: Container(
+                                    width: 24,
+                                    height: 24,
+                                    child: Image.asset("assets/icon/vila.png"),
+                                  )),
                               Text('Vila',
-                                  style: mainTextFont.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600))
+                                  style: monseratTextFont.copyWith(
+                                      color: text2,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500))
                             ],
                           ))),
                       IconButton(
@@ -201,74 +194,27 @@ class _MainPageState extends State<MainPage> {
                           },
                           icon: Container(
                               child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.note_outlined,
-                                size: 28,
-                                color: mainColor,
-                              ),
-                              Text('Note',
-                                  style: mainTextFont.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600))
+                              Container(
+                                  width: 24,
+                                  margin: EdgeInsetsDirectional.only(bottom: 4),
+                                  height: 24,
+                                  child: Container(
+                                    width: 24,
+                                    height: 24,
+                                    child: Image.asset("assets/icon/note.png"),
+                                  )),
+                              Text('Transaksi',
+                                  style: monseratTextFont.copyWith(
+                                      color: text2,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500))
                             ],
                           ))),
                     ],
                   ),
-                )
-                // BottomNavigationBar(
-                //     elevation: 0,
-                //     selectedItemColor: mainColor,
-                //     currentIndex: bottomNavBarIndex,
-                //     unselectedFontSize: 12,
-                //     // fixedColor: mainColor,
-                //     onTap: (index) {
-                //       setState(() {
-                //         bottomNavBarIndex = index;
-                //         pageController.jumpToPage(index);
-                //       });
-                //     },
-                //     items: [
-                //       BottomNavigationBarItem(
-                //           label: 'Home',
-                //           backgroundColor: Colors.red,
-
-                //           icon: Container(
-                //             margin: EdgeInsets.only(bottom: 6),
-                //             height: 20,
-                //             child: Image.asset((bottomNavBarIndex == 0)
-                //                 ? "assets/icon/note.png"
-                //                 : "assets/icon/note.png"),
-                //           )),
-                //       BottomNavigationBarItem(
-                //           label: 'Stok',
-                //           icon: Container(
-                //             margin: EdgeInsets.only(bottom: 6),
-                //             height: 20,
-                //             child: Image.asset((bottomNavBarIndex == 1)
-                //                 ? "assets/icon/note.png"
-                //                 : "assets/icon/note.png"),
-                //           )),
-                //       BottomNavigationBarItem(
-                //           label: 'Perusahaan',
-                //           icon: Container(
-                //             margin: EdgeInsets.only(bottom: 6),
-                //             height: 20,
-                //             child: Image.asset((bottomNavBarIndex == 2)
-                //                 ? "assets/icon/note.png"
-                //                 : "assets/icon/note.png"),
-                //           )),
-                //       BottomNavigationBarItem(
-                //           label: 'Note',
-                //           icon: Container(
-                //             margin: EdgeInsets.only(bottom: 6),
-                //             height: 20,
-                //             child: Image.asset((bottomNavBarIndex == 3)
-                //                 ? "assets/icon/note.png"
-                //                 : "assets/icon/note.png"),
-                //           ))
-                //     ]),
-                ),
+                )),
           ),
         ],
       ));
@@ -278,7 +224,6 @@ class BottomNavBarClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
-
     path.lineTo(size.width / 2 - 28, 0);
     path.quadraticBezierTo(size.width / 2 - 28, 33, size.width / 2, 33);
     path.quadraticBezierTo(size.width / 2 + 28, 33, size.width / 2 + 28, 0);
