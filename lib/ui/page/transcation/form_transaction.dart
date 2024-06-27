@@ -9,78 +9,97 @@ class FormTransaction extends StatefulWidget {
 }
 
 class _FormTransactionState extends State<FormTransaction> {
+  List<TransactionDetailModel> transaction_detail = [];
   @override
+  void change_transaction_detail(payload, status, index) {
+    switch (status) {
+      case 'tambah':
+        setState(() {
+          transaction_detail.add(payload);
+        });
+        break;
+      case 'ubah':
+        setState(() {
+          transaction_detail.replaceRange(index, index + 1, [payload]);
+        });
+        break;
+      case 'hapus':
+        setState(() {
+          transaction_detail.removeAt(index);
+        });
+        break;
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: bgcolor,
         body: Container(
-            margin: const EdgeInsets.only(top: 8),
+            margin: const EdgeInsets.only(top: 18),
             padding: const EdgeInsets.symmetric(horizontal: defaultMargin),
-            child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Expanded(
-                      child: Container(
-                          width: double.infinity,
+            child: ListView(
+              children: [
+                Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: GestureDetector(
+                            onTap: () => context.read<PageBloc>().add(
+                                GoToMainPage(
+                                    bottomNavBarIndex: 3, isExpired: false)),
+                            child: Container(
+                              width: 26,
+                              height: 26,
+                              child: Image.asset("assets/icon/arrow-back.png"),
+                            ),
+                          ),
+                        ),
+                        Align(
                           alignment: Alignment.center,
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: GestureDetector(
-                                  child: Container(
-                                    width: 26,
-                                    height: 26,
-                                    child: Image.asset(
-                                        "assets/icon/arrow-back.png"),
+                          child: Text(
+                            "Stok Produk",
+                            style: monseratTextFont.copyWith(
+                                color: textprimary,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            onTap: () => showModalBottomSheet(
+                              context: context,
+                              isScrollControlled:
+                                  true, // Allow bottom sheet to be scroll controlled
+                              builder: (BuildContext context) {
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context)
+                                        .viewInsets
+                                        .bottom,
                                   ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Stok Produk",
-                                  style: monseratTextFont.copyWith(
-                                      color: textprimary,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              // Align(
-                              //   alignment: Alignment.centerRight,
-                              //   child: GestureDetector(
-                              //     onTap: () => showModalBottomSheet(
-                              //       context: context,
-                              //       isScrollControlled:
-                              //           true, // Allow bottom sheet to be scroll controlled
-                              //       builder: (BuildContext context) {
-                              //         return Padding(
-                              //           padding: EdgeInsets.only(
-                              //             bottom: MediaQuery.of(context)
-                              //                 .viewInsets
-                              //                 .bottom,
-                              //           ),
-                              //           child: SingleChildScrollView(
-                              //               child: ModalStock(
-                              //                   null, futureProductModel)),
-                              //         );
-                              //       },
-                              //     ),
-                              //     child: Container(
-                              //       width: 26,
-                              //       height: 26,
-                              //       child: Image.asset("assets/icon/add.png"),
-                              //     ),
-                              //   ),
-                              // ),
-                            ],
-                          ))),
-                ])));
+                                  child: SingleChildScrollView(
+                                      child: ModalTransactionDetail(
+                                          change_transaction_detail,
+                                          null,
+                                          null)),
+                                );
+                              },
+                            ),
+                            child: Container(
+                              width: 26,
+                              height: 26,
+                              child: Image.asset("assets/icon/add.png"),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ))
+              ],
+            )));
   }
 }

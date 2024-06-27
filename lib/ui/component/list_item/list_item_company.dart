@@ -8,10 +8,11 @@ class ListCompanyItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
         width: double.infinity,
-        height: 420,
+        // height: 420,
         child: ListView.separated(
+          shrinkWrap: true,
           itemCount: data.length,
           itemBuilder: (BuildContext context, int index) => Slidable(
               endActionPane: ActionPane(
@@ -164,40 +165,55 @@ class ListCompanyItem extends StatelessWidget {
                           child: Image.asset('assets/icon/delete.png'),
                         )),
                   ]),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: bgcolor2,
-                    border:
-                        Border(left: BorderSide(color: mainColor, width: 4))),
-                padding: const EdgeInsets.only(
-                    top: 20, bottom: 20, left: 12, right: 12),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            data[index].name,
-                            style: monseratTextFont.copyWith(
-                                color: textprimary,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            data[index].address,
-                            style: monseratTextFont.copyWith(
-                                color: textprimary,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),
-                    ]),
-              )),
+              child: LayoutBuilder(
+                  builder: (context, constraints) => Container(
+                        decoration: BoxDecoration(
+                            color: bgcolor2,
+                            border: Border(
+                                left: BorderSide(color: mainColor, width: 4))),
+                        padding: const EdgeInsets.only(
+                            top: 20, bottom: 20, left: 12, right: 12),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    constraints: BoxConstraints(
+                                      maxWidth: constraints.maxWidth >= 500
+                                          ? 500
+                                          : constraints.maxWidth,
+                                    ),
+                                    child: Text(
+                                      data[index].name,
+                                      style: monseratTextFont.copyWith(
+                                          color: textprimary,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    constraints: BoxConstraints(
+                                      maxWidth: constraints.maxWidth >= 500
+                                          ? 500
+                                          : constraints.maxWidth,
+                                    ),
+                                    child: Text(
+                                      data[index].address,
+                                      style: monseratTextFont.copyWith(
+                                          color: textprimary,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ]),
+                      ))),
           separatorBuilder: (BuildContext context, int index) => SizedBox(
             height: 10,
           ),

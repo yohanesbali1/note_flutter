@@ -36,6 +36,8 @@ class _TransacationPageState extends State<TransacationPage> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: GestureDetector(
+                        onTap: () => context.read<PageBloc>().add(GoToMainPage(
+                            bottomNavBarIndex: 1, isExpired: false)),
                         child: Container(
                           width: 26,
                           height: 26,
