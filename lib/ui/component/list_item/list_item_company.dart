@@ -1,10 +1,10 @@
 part of 'list_item.dart';
 
-class ListTransactionItem extends StatelessWidget {
+class ListCompanyItem extends StatelessWidget {
   final data;
   final getData;
-  final transactionDB;
-  ListTransactionItem(this.data, this.getData, this.transactionDB);
+  final companyDB;
+  ListCompanyItem(this.data, this.getData, this.companyDB);
 
   @override
   Widget build(BuildContext context) {
@@ -146,10 +146,8 @@ class ListTransactionItem extends StatelessWidget {
                                                                       FontWeight
                                                                           .w600)),
                                                       onPressed: () async {
-                                                        await transactionDB
-                                                            .delete(
-                                                                id: data[index]
-                                                                    .id);
+                                                        await companyDB.delete(
+                                                            id: data[index].id);
                                                         getData();
                                                         Navigator.pop(context);
                                                       },

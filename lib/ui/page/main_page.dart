@@ -43,10 +43,10 @@ class _MainPageState extends State<MainPage> {
                       });
                     },
                     children: <Widget>[
-                      const DashboardPage(),
+                      DashboardPage(),
                       StockPage(),
-                      // CompanyPage(),
-                      // TransactionPage(),
+                      CompanyPage(),
+                      TransacationPage(),
                     ],
                   ),
                 ),
@@ -186,7 +186,9 @@ class _MainPageState extends State<MainPage> {
                                   )),
                               Text('Vila',
                                   style: monseratTextFont.copyWith(
-                                      color: text2,
+                                      color: bottomNavBarIndex == 2
+                                          ? mainColor
+                                          : text2,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500))
                             ],
@@ -210,12 +212,14 @@ class _MainPageState extends State<MainPage> {
                                     width: 24,
                                     height: 24,
                                     child: Image.asset(bottomNavBarIndex == 3
-                                        ? "assets/icon/transaction-active.png"
+                                        ? "assets/icon/note-active.png"
                                         : "assets/icon/note.png"),
                                   )),
                               Text('Transaksi',
                                   style: monseratTextFont.copyWith(
-                                      color: text2,
+                                      color: bottomNavBarIndex == 3
+                                          ? mainColor
+                                          : text2,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500))
                             ],

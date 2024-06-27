@@ -1,25 +1,24 @@
-part of "pages.dart";
+part of 'pages.dart';
 
-class StockPage extends StatefulWidget {
-  StockPage({super.key});
+class CompanyPage extends StatefulWidget {
+  const CompanyPage({super.key});
 
   @override
-  State<StockPage> createState() => _StockPageState();
+  State<CompanyPage> createState() => _CompanyPageState();
 }
 
-class _StockPageState extends State<StockPage> {
-  TextEditingController searchController = TextEditingController();
-  Future<List<ProductModel>>? futureProduct;
-  final productDB = ProductDB();
-  @override
+class _CompanyPageState extends State<CompanyPage> {
+  Future<List<CompanyModel>>? futureCompany;
+  final companyDB = CompanyDB();
   void initState() {
-    futureProductModel();
+    super.initState();
+    getData();
   }
 
   @override
-  void futureProductModel() {
+  void getData() {
     setState(() {
-      futureProduct = productDB.getAll();
+      futureCompany = companyDB.getAll();
     });
   }
 
@@ -47,7 +46,7 @@ class _StockPageState extends State<StockPage> {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "Stok Produk",
+                        "Vila",
                         style: monseratTextFont.copyWith(
                             color: textprimary,
                             fontSize: 16,
@@ -69,7 +68,7 @@ class _StockPageState extends State<StockPage> {
                                     MediaQuery.of(context).viewInsets.bottom,
                               ),
                               child: SingleChildScrollView(
-                                  child: ModalStock(null, futureProductModel)),
+                                  child: ModalCompany(null, getData)),
                             );
                           },
                         ),
@@ -85,7 +84,7 @@ class _StockPageState extends State<StockPage> {
             Container(
               margin: EdgeInsets.only(top: 40),
               child: FutureBuilder(
-                  future: futureProduct,
+                  future: futureCompany,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
@@ -93,7 +92,7 @@ class _StockPageState extends State<StockPage> {
                       final data = snapshot.data ?? [];
                       return data.isEmpty
                           ? DataNotFound()
-                          : ListStockItem(data, futureProductModel, productDB);
+                          : ListCompanyItem(data, getData, companyDB);
                     }
                   }),
             )

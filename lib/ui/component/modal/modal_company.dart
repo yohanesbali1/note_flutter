@@ -1,24 +1,26 @@
 part of 'modal.dart';
 
-class ModalStock extends StatefulWidget {
-  final ProductModel? product;
-  final futureProductModel;
-  const ModalStock(this.product, this.futureProductModel);
+class ModalCompany extends StatefulWidget {
+  final CompanyModel? company;
+  final getData;
+  ModalCompany(this.company, this.getData);
 
   @override
-  State<ModalStock> createState() => _ModalStockState();
+  State<ModalCompany> createState() => _ModalCompanyState();
 }
 
-class _ModalStockState extends State<ModalStock> {
-  final productDB = ProductDB();
+class _ModalCompanyState extends State<ModalCompany> {
+  final companyDB = CompanyDB();
   int? id;
   TextEditingController nameController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   @override
   void initState() {
     super.initState();
     setState(() {
-      nameController.text = widget.product?.name ?? "";
-      id = widget.product?.id ?? null;
+      nameController.text = widget.company?.name ?? "";
+      addressController.text = widget.company?.address ?? "";
+      id = widget.company?.id ?? null;
     });
   }
 
@@ -36,7 +38,7 @@ class _ModalStockState extends State<ModalStock> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Form Stok Produk',
+                'Form Vila',
                 textAlign: TextAlign.center,
                 style: monseratTextFont.copyWith(
                     color: mainColor,
@@ -56,7 +58,7 @@ class _ModalStockState extends State<ModalStock> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  'Nama Barang',
+                                  'Nama Vila',
                                   style: monseratTextFont.copyWith(
                                       color: text2,
                                       fontSize: 14,
@@ -70,7 +72,47 @@ class _ModalStockState extends State<ModalStock> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400),
                                   decoration: InputDecoration(
-                                      hintText: 'contoh : Bantal',
+                                      hintText: 'contoh : Vila Flamboyan',
+                                      hintStyle: monseratTextFont.copyWith(
+                                          color: text3,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 6),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(width: 1, color: text3),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: accColor))),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 12,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Alamat',
+                                  style: monseratTextFont.copyWith(
+                                      color: text2,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                TextFormField(
+                                  controller: addressController,
+                                  cursorColor: mainColor,
+                                  maxLines: 5,
+                                  style: monseratTextFont.copyWith(
+                                      color: text2,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400),
+                                  decoration: InputDecoration(
+                                      hintText:
+                                          'contoh : Jl. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                                       hintStyle: monseratTextFont.copyWith(
                                           color: text3,
                                           fontSize: 14,
@@ -111,16 +153,21 @@ class _ModalStockState extends State<ModalStock> {
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500)),
                           onPressed: () async {
-                            if (nameController.text == '') {
+                            if (nameController.text == '' ||
+                                addressController.text == '') {
                               return;
                             }
                             if (id == null) {
-                              await productDB.create(name: nameController.text);
+                              await companyDB.create(
+                                  name: nameController.text,
+                                  address: addressController.text);
                             } else {
-                              await productDB.update(
-                                  name: nameController.text, id: id!);
+                              await companyDB.update(
+                                  name: nameController.text,
+                                  id: id!,
+                                  address: addressController.text);
                             }
-                            widget.futureProductModel();
+                            widget.getData();
                             Navigator.pop(context);
                           },
                         ),

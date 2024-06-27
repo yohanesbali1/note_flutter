@@ -182,8 +182,8 @@ class ListStockItem extends StatelessWidget {
                             data[index].name,
                             style: monseratTextFont.copyWith(
                                 color: textprimary,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),

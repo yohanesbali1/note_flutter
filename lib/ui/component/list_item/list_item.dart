@@ -6,4 +6,5 @@ import 'package:nota/shared/shared.dart';
 import 'package:nota/ui/component/modal/modal.dart';
 
 part 'list_item_stock.dart';
+part 'list_item_company.dart';
 part 'list_item_transaction.dart';
