@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:nota/database/database.dart';
-import 'package:nota/models/models.dart';
-import 'package:nota/shared/shared.dart';
+part of 'list_item.dart';
 
 class ListTransaction extends StatefulWidget {
   ListTransaction({super.key});

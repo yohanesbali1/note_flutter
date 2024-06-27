@@ -24,6 +24,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
         backgroundColor: bgcolor,
         body: Container(
+          margin: const EdgeInsets.only(top: 8),
           child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -43,7 +44,7 @@ class _MainPageState extends State<MainPage> {
                     },
                     children: <Widget>[
                       const DashboardPage(),
-                      // StockPage(),
+                      StockPage(),
                       // CompanyPage(),
                       // TransactionPage(),
                     ],
@@ -148,12 +149,15 @@ class _MainPageState extends State<MainPage> {
                                   child: Container(
                                     width: 24,
                                     height: 24,
-                                    child:
-                                        Image.asset("assets/icon/archive.png"),
+                                    child: Image.asset(bottomNavBarIndex == 1
+                                        ? "assets/icon/archive-active.png"
+                                        : "assets/icon/archive.png"),
                                   )),
                               Text('Stok',
                                   style: monseratTextFont.copyWith(
-                                      color: text2,
+                                      color: bottomNavBarIndex == 1
+                                          ? mainColor
+                                          : text2,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500))
                             ],
@@ -176,7 +180,9 @@ class _MainPageState extends State<MainPage> {
                                   child: Container(
                                     width: 24,
                                     height: 24,
-                                    child: Image.asset("assets/icon/vila.png"),
+                                    child: Image.asset(bottomNavBarIndex == 2
+                                        ? "assets/icon/company-active.png"
+                                        : "assets/icon/vila.png"),
                                   )),
                               Text('Vila',
                                   style: monseratTextFont.copyWith(
@@ -203,7 +209,9 @@ class _MainPageState extends State<MainPage> {
                                   child: Container(
                                     width: 24,
                                     height: 24,
-                                    child: Image.asset("assets/icon/note.png"),
+                                    child: Image.asset(bottomNavBarIndex == 3
+                                        ? "assets/icon/transaction-active.png"
+                                        : "assets/icon/note.png"),
                                   )),
                               Text('Transaksi',
                                   style: monseratTextFont.copyWith(
