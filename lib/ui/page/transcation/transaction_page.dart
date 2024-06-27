@@ -1,4 +1,4 @@
-part of 'pages.dart';
+part of '../pages.dart';
 
 class TransacationPage extends StatefulWidget {
   const TransacationPage({super.key});
@@ -57,21 +57,9 @@ class _TransacationPageState extends State<TransacationPage> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
-                        onTap: () => showModalBottomSheet(
-                          context: context,
-                          isScrollControlled:
-                              true, // Allow bottom sheet to be scroll controlled
-                          builder: (BuildContext context) {
-                            return Padding(
-                              padding: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).viewInsets.bottom,
-                              ),
-                              child: SingleChildScrollView(
-                                  child: ModalCompany(null, getData)),
-                            );
-                          },
-                        ),
+                        onTap: () => context
+                            .read<PageBloc>()
+                            .add(GoToFormTransactionPage(null)),
                         child: Container(
                           width: 26,
                           height: 26,
