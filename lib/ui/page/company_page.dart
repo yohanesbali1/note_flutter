@@ -1,7 +1,8 @@
 part of 'pages.dart';
 
 class CompanyPage extends StatefulWidget {
-  const CompanyPage({super.key});
+  final change_site;
+  const CompanyPage(this.change_site);
 
   @override
   State<CompanyPage> createState() => _CompanyPageState();
@@ -36,6 +37,7 @@ class _CompanyPageState extends State<CompanyPage> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: GestureDetector(
+                        onTap: () => {widget.change_site(0)},
                         child: Container(
                           width: 26,
                           height: 26,

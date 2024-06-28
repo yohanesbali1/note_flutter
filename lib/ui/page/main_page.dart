@@ -19,6 +19,13 @@ class _MainPageState extends State<MainPage> {
     pageController = PageController(initialPage: bottomNavBarIndex);
   }
 
+  void change_site(payload) {
+    setState(() {
+      bottomNavBarIndex = payload;
+      pageController.jumpToPage(payload);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,9 +51,9 @@ class _MainPageState extends State<MainPage> {
                     },
                     children: <Widget>[
                       DashboardPage(),
-                      StockPage(),
-                      CompanyPage(),
-                      TransacationPage(),
+                      StockPage(change_site),
+                      CompanyPage(change_site),
+                      TransacationPage(change_site),
                     ],
                   ),
                 ),
@@ -102,10 +109,7 @@ class _MainPageState extends State<MainPage> {
                     children: [
                       IconButton(
                           onPressed: () {
-                            setState(() {
-                              bottomNavBarIndex = 0;
-                              pageController.jumpToPage(bottomNavBarIndex);
-                            });
+                            change_site(0);
                           },
                           icon: Container(
                               child: Column(
@@ -133,10 +137,7 @@ class _MainPageState extends State<MainPage> {
                           ))),
                       IconButton(
                           onPressed: () {
-                            setState(() {
-                              bottomNavBarIndex = 1;
-                              pageController.jumpToPage(bottomNavBarIndex);
-                            });
+                            change_site(1);
                           },
                           icon: Container(
                               child: Column(
@@ -164,10 +165,7 @@ class _MainPageState extends State<MainPage> {
                           ))),
                       IconButton(
                           onPressed: () {
-                            setState(() {
-                              bottomNavBarIndex = 2;
-                              pageController.jumpToPage(bottomNavBarIndex);
-                            });
+                            change_site(2);
                           },
                           icon: Container(
                               child: Column(
@@ -195,10 +193,7 @@ class _MainPageState extends State<MainPage> {
                           ))),
                       IconButton(
                           onPressed: () {
-                            setState(() {
-                              bottomNavBarIndex = 3;
-                              pageController.jumpToPage(bottomNavBarIndex);
-                            });
+                            change_site(3);
                           },
                           icon: Container(
                               child: Column(

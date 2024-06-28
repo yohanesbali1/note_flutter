@@ -24,21 +24,9 @@ class ListTransactionItem extends StatelessWidget {
                             EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                         backgroundColor: mainColor,
                         onPressed: (context) {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled:
-                                true, // Allow bottom sheet to be scroll controlled
-                            builder: (BuildContext context) {
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                  bottom:
-                                      MediaQuery.of(context).viewInsets.bottom,
-                                ),
-                                child: SingleChildScrollView(
-                                    child: ModalCompany(data[index], getData)),
-                              );
-                            },
-                          );
+                          context
+                              .read<PageBloc>()
+                              .add(GoToFormTransactionPage(data[index]));
                         },
                         child: Container(
                           width: 25,
@@ -180,7 +168,7 @@ class ListTransactionItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            data[index].name,
+                            data[index].company_name,
                             style: monseratTextFont.copyWith(
                                 color: textprimary,
                                 fontSize: 16,
@@ -190,7 +178,7 @@ class ListTransactionItem extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            data[index].address,
+                            data[index].date,
                             style: monseratTextFont.copyWith(
                                 color: textprimary,
                                 fontSize: 14,
@@ -198,6 +186,19 @@ class ListTransactionItem extends StatelessWidget {
                           ),
                         ],
                       ),
+                      LayoutBuilder(
+                          builder: (context, constraints) => Container(
+                                constraints: BoxConstraints(
+                                    maxWidth: constraints.maxWidth),
+                                child: Text(
+                                  Helper.convertToIdr(
+                                      (data[index].totalprice), 2),
+                                  style: monseratTextFont.copyWith(
+                                      color: mainColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ))
                     ]),
               )),
           separatorBuilder: (BuildContext context, int index) => SizedBox(

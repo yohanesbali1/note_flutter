@@ -1,7 +1,8 @@
 part of "pages.dart";
 
 class StockPage extends StatefulWidget {
-  StockPage({super.key});
+  final change_site;
+  StockPage(this.change_site);
 
   @override
   State<StockPage> createState() => _StockPageState();
@@ -42,6 +43,7 @@ class _StockPageState extends State<StockPage> {
                           height: 26,
                           child: Image.asset("assets/icon/arrow-back.png"),
                         ),
+                        onTap: () => {widget.change_site(0)},
                       ),
                     ),
                     Align(

@@ -42,11 +42,13 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
 
   Future<void> getData() async {
     var data = await productDB.getAll();
-    print(data);
     setState(() {
       product_data = data;
     });
   }
+
+  ProductModel show_product(id) =>
+      product_data.firstWhere((item) => item.id == id);
 
   Widget build(BuildContext context) {
     return Container(
@@ -88,92 +90,46 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500),
                                 ),
-                                // TextFormField(
-                                //   controller: nameController,
-                                //   cursorColor: mainColor,
-                                //   style: monseratTextFont.copyWith(
-                                //       color: text2,
-                                //       fontSize: 14,
-                                //       fontWeight: FontWeight.w400),
-                                //   decoration: InputDecoration(
-                                //       hintText: 'contoh : Vila Flamboyan',
-                                //       hintStyle: monseratTextFont.copyWith(
-                                //           color: text3,
-                                //           fontSize: 14,
-                                //           fontWeight: FontWeight.w400),
-                                //       contentPadding: EdgeInsets.symmetric(
-                                //           vertical: 10, horizontal: 6),
-                                //       enabledBorder: UnderlineInputBorder(
-                                //         borderSide:
-                                //             BorderSide(width: 1, color: text3),
-                                //       ),
-                                //       focusedBorder: UnderlineInputBorder(
-                                //           borderSide: BorderSide(
-                                //               width: 1, color: accColor))),
-                                // ),
-                                // DropdownButtonFormField(
-                                //   elevation: 1,
-                                //   onChanged: (newValue) {
-                                //     setState(() {
-                                //       product_value = newValue;
-                                //     });
-                                //   },
-                                //   alignment: Alignment.bottomCenter,
-                                //   decoration: InputDecoration(
-                                //       hintText: 'Pilih produk',
-                                //       hintStyle: monseratTextFont.copyWith(
-                                //           color: text3,
-                                //           fontSize: 14,
-                                //           fontWeight: FontWeight.w400),
-                                //       contentPadding: EdgeInsets.symmetric(
-                                //           vertical: 10, horizontal: 6),
-                                //       enabledBorder: UnderlineInputBorder(
-                                //         borderSide:
-                                //             BorderSide(width: 1, color: text3),
-                                //       ),
-                                //       focusedBorder: UnderlineInputBorder(
-                                //           borderSide: BorderSide(
-                                //               width: 1, color: accColor))),
-                                //   value: product_value,
-                                //   dropdownColor: bgcolor2,
-                                //   items: product_data
-                                //       .map<DropdownMenuItem<int>>((value) {
-                                //     return DropdownMenuItem<int>(
-                                //       value: value.id,
-                                //       child: Text(
-                                //         value.name,
-                                //         style: monseratTextFont.copyWith(
-                                //             fontSize: 16,
-                                //             fontWeight: FontWeight.w400),
-                                //       ),
-                                //     );
-                                //   }).toList(),
-                                //   style: monseratTextFont.copyWith(
-                                //       fontSize: 16,
-                                //       fontWeight: FontWeight.w400),
-                                // ),
-                                DropdownSearch<String>(
-                                  popupProps: PopupProps.menu(
-                                    showSelectedItems: true,
-                                    disabledItemFn: (String s) =>
-                                        s.startsWith('I'),
-                                  ),
-                                  items: [
-                                    "Brazil",
-                                    "Italia (Disabled)",
-                                    "Tunisia",
-                                    'Canada'
-                                  ],
-                                  dropdownDecoratorProps:
-                                      DropDownDecoratorProps(
-                                    dropdownSearchDecoration: InputDecoration(
-                                      labelText: "Menu mode",
-                                      hintText: "country in menu mode",
-                                    ),
-                                  ),
-                                  onChanged: print,
-                                  selectedItem: "Brazil",
-                                )
+                                DropdownButtonFormField(
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      product_value = newValue;
+                                    });
+                                  },
+                                  alignment: Alignment.bottomCenter,
+                                  decoration: InputDecoration(
+                                      hintText: 'Pilih produk',
+                                      hintStyle: monseratTextFont.copyWith(
+                                          color: text3,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 6),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(width: 1, color: text3),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: accColor))),
+                                  value: product_value,
+                                  dropdownColor: bgcolor2,
+                                  items: product_data
+                                      .map<DropdownMenuItem<int>>((value) {
+                                    return DropdownMenuItem<int>(
+                                      value: value.id,
+                                      child: Text(
+                                        value.name,
+                                        style: monseratTextFont.copyWith(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  style: monseratTextFont.copyWith(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400),
+                                ),
                               ],
                             ),
                             SizedBox(
@@ -321,21 +277,34 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500)),
                           onPressed: () async {
-                            // if (nameController.text == '' ||
-                            //     addressController.text == '') {
-                            //   return;
-                            // }
-                            // if (id == null) {
-                            //   await companyDB.create(
-                            //       name: nameController.text,
-                            //       address: addressController.text);
-                            // } else {
-                            //   await companyDB.update(
-                            //       name: nameController.text,
-                            //       id: id!,
-                            //       address: addressController.text);
-                            // }
-                            // widget.getData();
+                            if (product_value == null ||
+                                qtyController.text == '' ||
+                                priceController.text == '') {
+                              return;
+                            }
+                            if (widget.id == null) {
+                              widget.change_transaction_detail(
+                                  TransactionDetailModel(
+                                      product_id: product_value ?? 0,
+                                      product_name:
+                                          show_product(product_value).name,
+                                      amount: int.parse(qtyController.text),
+                                      price:
+                                          double.parse(priceController.text)),
+                                  'tambah',
+                                  null);
+                            } else {
+                              widget.change_transaction_detail(
+                                  TransactionDetailModel(
+                                      product_id: product_value ?? 0,
+                                      amount: int.parse(qtyController.text),
+                                      product_name:
+                                          show_product(product_value).name,
+                                      price:
+                                          double.parse(priceController.text)),
+                                  'ubah',
+                                  widget.id);
+                            }
                             Navigator.pop(context);
                           },
                         ),

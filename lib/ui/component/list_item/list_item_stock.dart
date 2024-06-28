@@ -12,6 +12,7 @@ class ListStockItem extends StatelessWidget {
         child: Column(children: [
       Container(
           width: double.infinity,
+          margin: EdgeInsets.only(bottom: 20),
           child: ListView.separated(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),

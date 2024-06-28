@@ -25,7 +25,7 @@ class DataNotFound extends StatelessWidget {
                 height: 2,
               ),
               Text(
-                "Data Tidak ditemukan",
+                "Data tidak ditemukan",
                 style: monseratTextFont.copyWith(
                     color: textprimary,
                     fontSize: 14,

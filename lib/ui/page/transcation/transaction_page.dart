@@ -1,7 +1,8 @@
 part of '../pages.dart';
 
 class TransacationPage extends StatefulWidget {
-  const TransacationPage({super.key});
+  final change_site;
+  const TransacationPage(this.change_site);
 
   @override
   State<TransacationPage> createState() => _TransacationPageState();
@@ -16,7 +17,7 @@ class _TransacationPageState extends State<TransacationPage> {
   }
 
   @override
-  void getData() {
+  Future<void> getData() async {
     setState(() {
       futureTranscation = transactionDB.getAll();
     });
@@ -36,8 +37,7 @@ class _TransacationPageState extends State<TransacationPage> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: GestureDetector(
-                        onTap: () => context.read<PageBloc>().add(GoToMainPage(
-                            bottomNavBarIndex: 1, isExpired: false)),
+                        onTap: () => {widget.change_site(0)},
                         child: Container(
                           width: 26,
                           height: 26,

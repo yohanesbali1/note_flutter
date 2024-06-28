@@ -35,14 +35,20 @@ class TransactionDB {
   Future<List<TransactionModel>> getAll() async {
     final database = await DatabaseService().database;
     final todos = await database.rawQuery(
-        '''SELECT *,$tablename_company.name as company_name FROM $tablename INNER JOIN $tablename_company ON $tablename.company_id = $tablename_company.id''');
+        '''SELECT $tablename.*,$tablename_company.name as company_name, sum($tablename_join.amount * $tablename_join.price) as totalprice FROM $tablename 
+        INNER JOIN $tablename_join ON $tablename.id = $tablename_join.id_transaction
+        INNER JOIN $tablename_company ON $tablename.company_id = $tablename_company.id
+        GROUP BY $tablename_join.id_transaction
+     ''');
     return todos.map((e) => TransactionModel.fromJson(e)).toList();
   }
 
   Future<List<TransactionDetailModel>> getdetail(int id) async {
     final database = await DatabaseService().database;
     final todos = await database.rawQuery(
-        '''SELECT * FROM $tablename_join where id_transaction = ?''', [id]);
+        '''SELECT $tablename_join.*,product.name as product_name FROM $tablename_join
+         INNER JOIN product ON product.id = $tablename_join.product_id
+         where id_transaction = ?''', [id]);
     return todos.map((e) => TransactionDetailModel.fromJson(e)).toList();
   }
 
