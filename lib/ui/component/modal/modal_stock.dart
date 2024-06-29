@@ -13,6 +13,7 @@ class _ModalStockState extends State<ModalStock> {
   final productDB = ProductDB();
   int? id;
   TextEditingController nameController = TextEditingController();
+  bool nameValidate = false;
   @override
   void initState() {
     super.initState();
@@ -65,12 +66,18 @@ class _ModalStockState extends State<ModalStock> {
                                 TextFormField(
                                   controller: nameController,
                                   cursorColor: mainColor,
+                                  onChanged: (value) => setState(() {
+                                    nameValidate = nameController.text == "";
+                                  }),
                                   style: monseratTextFont.copyWith(
                                       color: text2,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400),
                                   decoration: InputDecoration(
                                       hintText: 'contoh : Bantal',
+                                      errorText: nameValidate
+                                          ? 'Data tidak boleh kosong'
+                                          : null,
                                       hintStyle: monseratTextFont.copyWith(
                                           color: text3,
                                           fontSize: 14,
@@ -112,6 +119,9 @@ class _ModalStockState extends State<ModalStock> {
                                   fontWeight: FontWeight.w500)),
                           onPressed: () async {
                             if (nameController.text == '') {
+                              setState(() {
+                                nameValidate = true;
+                              });
                               return;
                             }
                             if (id == null) {

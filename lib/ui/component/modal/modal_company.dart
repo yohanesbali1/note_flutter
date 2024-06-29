@@ -14,6 +14,10 @@ class _ModalCompanyState extends State<ModalCompany> {
   int? id;
   TextEditingController nameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+
+  bool nameValidate = false;
+  bool addressValidate = false;
+
   @override
   void initState() {
     super.initState();
@@ -67,12 +71,18 @@ class _ModalCompanyState extends State<ModalCompany> {
                                 TextFormField(
                                   controller: nameController,
                                   cursorColor: mainColor,
+                                  onChanged: (value) => setState(() {
+                                    nameValidate = nameController.text == "";
+                                  }),
                                   style: monseratTextFont.copyWith(
                                       color: text2,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400),
                                   decoration: InputDecoration(
                                       hintText: 'contoh : Vila Flamboyan',
+                                      errorText: nameValidate
+                                          ? 'Data tidak boleh kosong'
+                                          : null,
                                       hintStyle: monseratTextFont.copyWith(
                                           color: text3,
                                           fontSize: 14,
@@ -106,11 +116,18 @@ class _ModalCompanyState extends State<ModalCompany> {
                                   controller: addressController,
                                   cursorColor: mainColor,
                                   maxLines: 5,
+                                  onChanged: (value) => setState(() {
+                                    addressValidate =
+                                        addressController.text == "";
+                                  }),
                                   style: monseratTextFont.copyWith(
                                       color: text2,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400),
                                   decoration: InputDecoration(
+                                      errorText: addressValidate
+                                          ? 'Data tidak boleh kosong'
+                                          : null,
                                       hintText:
                                           'contoh : Jl. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                                       hintStyle: monseratTextFont.copyWith(
@@ -155,6 +172,16 @@ class _ModalCompanyState extends State<ModalCompany> {
                           onPressed: () async {
                             if (nameController.text == '' ||
                                 addressController.text == '') {
+                              nameController.text == ''
+                                  ? setState(() {
+                                      nameValidate = true;
+                                    })
+                                  : null;
+                              addressController.text == ''
+                                  ? setState(() {
+                                      addressValidate = true;
+                                    })
+                                  : null;
                               return;
                             }
                             if (id == null) {

@@ -18,6 +18,11 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
   TextEditingController qtyController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController finalController = TextEditingController();
+
+  bool productValidate = false;
+  bool qtyValidate = false;
+  bool priceValidate = false;
+
   @override
   void initState() {
     getData();
@@ -94,11 +99,15 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
                                   onChanged: (newValue) {
                                     setState(() {
                                       product_value = newValue;
+                                      productValidate = newValue == "";
                                     });
                                   },
                                   alignment: Alignment.bottomCenter,
                                   decoration: InputDecoration(
                                       hintText: 'Pilih produk',
+                                      errorText: productValidate
+                                          ? 'Data tidak boleh kosong'
+                                          : null,
                                       hintStyle: monseratTextFont.copyWith(
                                           color: text3,
                                           fontSize: 14,
@@ -157,6 +166,9 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
                                       fontWeight: FontWeight.w400),
                                   decoration: InputDecoration(
                                       hintText: 'contoh : 1',
+                                      errorText: qtyValidate
+                                          ? 'Data tidak boleh kosong'
+                                          : null,
                                       hintStyle: monseratTextFont.copyWith(
                                           color: text3,
                                           fontSize: 14,
@@ -198,6 +210,9 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
                                       fontWeight: FontWeight.w400),
                                   decoration: InputDecoration(
                                       hintText: 'contoh : 10000',
+                                      errorText: priceValidate
+                                          ? 'Data tidak boleh kosong'
+                                          : null,
                                       hintStyle: monseratTextFont.copyWith(
                                           color: text3,
                                           fontSize: 14,
@@ -280,6 +295,22 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
                             if (product_value == null ||
                                 qtyController.text == '' ||
                                 priceController.text == '') {
+                              product_value == null
+                                  ? setState(() {
+                                      productValidate = true;
+                                    })
+                                  : null;
+
+                              qtyController.text == ''
+                                  ? setState(() {
+                                      qtyValidate = true;
+                                    })
+                                  : null;
+                              priceController.text == ''
+                                  ? setState(() {
+                                      priceValidate = true;
+                                    })
+                                  : null;
                               return;
                             }
                             if (widget.id == null) {

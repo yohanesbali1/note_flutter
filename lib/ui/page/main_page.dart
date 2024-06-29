@@ -50,7 +50,7 @@ class _MainPageState extends State<MainPage> {
                       });
                     },
                     children: <Widget>[
-                      DashboardPage(),
+                      DashboardPage(change_site),
                       StockPage(change_site),
                       CompanyPage(change_site),
                       TransacationPage(change_site),

@@ -10,12 +10,7 @@ class ListTransactionDetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-        //  SingleChildScrollView(
-        //     child: Column(children: [
-        //   Container(
-        //       child:
-        ListView.separated(
+    return ListView.separated(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemCount: transaction_detail.length,
@@ -223,7 +218,5 @@ class ListTransactionDetailItem extends StatelessWidget {
         height: 10,
       ),
     );
-    // )
-    // ]));
   }
 }

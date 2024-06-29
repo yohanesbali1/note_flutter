@@ -16,6 +16,9 @@ class _FormTransactionState extends State<FormTransaction> {
   int? company_id;
   TextEditingController dateController = TextEditingController();
 
+  bool dateValidate = false;
+  bool companyValidate = false;
+
   void initState() {
     super.initState();
     getData();
@@ -172,12 +175,17 @@ class _FormTransactionState extends State<FormTransaction> {
                                                     onChanged: (newValue) {
                                                       setState(() {
                                                         company_id = newValue;
+                                                        companyValidate =
+                                                            newValue == "";
                                                       });
                                                     },
                                                     alignment:
                                                         Alignment.bottomCenter,
                                                     decoration: InputDecoration(
                                                         hintText: 'Pilih vila',
+                                                        errorText: companyValidate
+                                                            ? 'Data tidak boleh kosong'
+                                                            : null,
                                                         hintStyle: monseratTextFont
                                                             .copyWith(
                                                                 color: text3,
@@ -254,6 +262,12 @@ class _FormTransactionState extends State<FormTransaction> {
                                                   ),
                                                   TextFormField(
                                                     controller: dateController,
+                                                    onChanged: (value) =>
+                                                        setState(() {
+                                                      dateValidate =
+                                                          dateController.text ==
+                                                              "";
+                                                    }),
                                                     onTap: () async {
                                                       DateTime? pickedDate =
                                                           await showDatePicker(
@@ -285,6 +299,9 @@ class _FormTransactionState extends State<FormTransaction> {
                                                     decoration: InputDecoration(
                                                         hintText:
                                                             'contoh : 2024-01-01',
+                                                        errorText: dateValidate
+                                                            ? 'Data tidak boleh kosong'
+                                                            : null,
                                                         hintStyle: monseratTextFont
                                                             .copyWith(
                                                                 color: text3,
@@ -363,6 +380,17 @@ class _FormTransactionState extends State<FormTransaction> {
                                   if (company_id == null ||
                                       dateController.text == '' ||
                                       transaction_detail.length == 0) {
+                                    company_id == null
+                                        ? setState(() {
+                                            companyValidate = true;
+                                          })
+                                        : null;
+
+                                    dateController.text == ''
+                                        ? setState(() {
+                                            dateValidate = true;
+                                          })
+                                        : null;
                                     return;
                                   }
                                   if (widget.transaction_model == null) {
@@ -378,7 +406,10 @@ class _FormTransactionState extends State<FormTransaction> {
                                       id: widget.transaction_model!.id,
                                     );
                                   }
-                                  // widget.getData();
+                                  if (!mounted) return;
+                                  context
+                                      .read<PageBloc>()
+                                      .add(GoToMainPage(bottomNavBarIndex: 3));
                                 },
                               ),
                             )),

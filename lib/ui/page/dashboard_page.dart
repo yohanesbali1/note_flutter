@@ -1,7 +1,26 @@
 part of "pages.dart";
 
-class DashboardPage extends StatelessWidget {
-  const DashboardPage({super.key});
+class DashboardPage extends StatefulWidget {
+  final change_site;
+  const DashboardPage(this.change_site);
+
+  @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  Future<List<TransactionModel>>? futureTranscation;
+  final transactionDB = TransactionDB();
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  Future<void> getData() async {
+    setState(() {
+      futureTranscation = transactionDB.getLimit();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,18 +157,34 @@ class DashboardPage extends StatelessWidget {
                   ),
                   textAlign: TextAlign.left,
                 ),
-                Text(
-                  "Lihat Semua",
-                  style: monseratTextFont.copyWith(
-                      color: mainColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                  textAlign: TextAlign.left,
-                ),
+                GestureDetector(
+                    onTap: () => {widget.change_site(3)},
+                    child: Text(
+                      "Lihat Semua",
+                      style: monseratTextFont.copyWith(
+                          color: mainColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600),
+                      textAlign: TextAlign.left,
+                    ))
               ],
             ),
           ),
-          // ListTransaction()
+          Container(
+            margin: EdgeInsets.only(top: 40),
+            child: FutureBuilder(
+                future: futureTranscation,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    final data = snapshot.data ?? [];
+                    return data.isEmpty
+                        ? DataNotFound()
+                        : ListTransactionItem(data, getData, transactionDB);
+                  }
+                }),
+          )
         ],
       ),
     );

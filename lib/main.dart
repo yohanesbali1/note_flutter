@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:nota/bloc/bloc.dart';
+import 'package:nota/shared/shared.dart';
 import 'package:nota/ui/page/pages.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +24,11 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (_) => PageBloc()),
           ],
           child: MaterialApp(
+            theme: ThemeData(
+              primaryColor: mainColor,
+              fontFamily: monseratTextFont.fontFamily,
+              textTheme: GoogleFonts.montserratTextTheme(),
+            ),
             debugShowCheckedModeBanner: false,
             home: Wrapper(),
           )),
