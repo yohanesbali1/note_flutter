@@ -171,7 +171,7 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 40),
+            margin: EdgeInsets.only(top: 40, bottom: 30),
             child: FutureBuilder(
                 future: futureTranscation,
                 builder: (context, snapshot) {

@@ -117,6 +117,7 @@ class _FormTransactionState extends State<FormTransaction> {
                                     alignment: Alignment.centerRight,
                                     child: GestureDetector(
                                       onTap: () => showModalBottomSheet(
+                                        backgroundColor: Colors.transparent,
                                         context: context,
                                         isScrollControlled:
                                             true, // Allow bottom sheet to be scroll controlled

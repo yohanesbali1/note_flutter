@@ -61,6 +61,7 @@ class _StockPageState extends State<StockPage> {
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
                         onTap: () => showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
                           context: context,
                           isScrollControlled:
                               true, // Allow bottom sheet to be scroll controlled

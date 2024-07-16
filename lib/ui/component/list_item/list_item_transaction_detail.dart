@@ -25,6 +25,7 @@ class ListTransactionDetailItem extends StatelessWidget {
                     backgroundColor: mainColor,
                     onPressed: (context) {
                       showModalBottomSheet(
+                        backgroundColor: Colors.transparent,
                         context: context,
                         isScrollControlled:
                             true, // Allow bottom sheet to be scroll controlled

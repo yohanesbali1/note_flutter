@@ -23,6 +23,51 @@ class _TransacationPageState extends State<TransacationPage> {
     });
   }
 
+  void createExcel() async {
+    var excel = Excel.createExcel();
+    Sheet sheetObject = excel['Sheet1'];
+
+    sheetObject.cell(CellIndex.indexByString("A1")).value =
+        TextCellValue('Some Text');
+    sheetObject.cell(CellIndex.indexByString("B1")).value =
+        TextCellValue('Some Text');
+    sheetObject.cell(CellIndex.indexByString("A2")).value =
+        TextCellValue('Some Text');
+    sheetObject.cell(CellIndex.indexByString("B2")).value =
+        TextCellValue('Some Text');
+    sheetObject.cell(CellIndex.indexByString("A3")).value =
+        TextCellValue('Some Text');
+    sheetObject.cell(CellIndex.indexByString("B3")).value =
+        TextCellValue('Some Text');
+
+    var directory = Directory('/storage/emulated/0/Download');
+    String filePath = '${directory.path}/example.text';
+
+    // Save the file
+    var fileBytes = excel.save();
+    if (fileBytes != null) {
+      File(filePath)
+        ..createSync(recursive: true)
+        ..writeAsBytesSync(fileBytes);
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+                title: const Text('AlertDialog Title'),
+                content: const Text('AlertDialog description'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'OK'),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,9 +104,7 @@ class _TransacationPageState extends State<TransacationPage> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
-                        onTap: () => context
-                            .read<PageBloc>()
-                            .add(GoToFormTransactionPage(null)),
+                        onTap: () => createExcel(),
                         child: Container(
                           width: 26,
                           height: 26,
