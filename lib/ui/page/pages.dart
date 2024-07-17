@@ -1,9 +1,5 @@
-import 'dart:io';
-
-import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:nota/bloc/bloc.dart';
 import 'package:nota/database/database.dart';
@@ -12,7 +8,6 @@ import 'package:nota/shared/shared.dart';
 import 'package:nota/ui/component/list_item/list_item.dart';
 import 'package:nota/ui/component/modal/modal.dart';
 import 'package:nota/ui/widget/widget.dart';
-import 'package:path_provider/path_provider.dart';
 
 part 'wrapper.dart';
 part 'splash_page.dart';
