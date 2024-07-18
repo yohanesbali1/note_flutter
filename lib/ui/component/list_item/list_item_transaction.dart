@@ -30,6 +30,21 @@ class ListTransactionItem extends StatelessWidget {
                           onPressed: (context) {
                             context
                                 .read<PageBloc>()
+                                .add(GoToTransactionDetailPage(data[index]));
+                          },
+                          child: Container(
+                            width: 25,
+                            height: 25,
+                            child: Image.asset('assets/icon/edit.png'),
+                          )),
+                      CustomSlidableAction(
+                          autoClose: true,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                          backgroundColor: mainColor,
+                          onPressed: (context) {
+                            context
+                                .read<PageBloc>()
                                 .add(GoToFormTransactionPage(data[index]));
                           },
                           child: Container(

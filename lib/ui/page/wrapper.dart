@@ -11,6 +11,8 @@ class Wrapper extends StatelessWidget {
                 ? MainPage(bottomNavBarIndex: pageState.bottomNavBarIndex)
                 : (pageState is OnFormTransactionPage)
                     ? FormTransaction(pageState.transactionModel)
-                    : Container());
+                    : (pageState is OnTransactionDetailPage)
+                        ? TransactionDetail(pageState.transactionModel)
+                        : Container());
   }
 }

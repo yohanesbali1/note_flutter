@@ -193,11 +193,12 @@ class ListCompanyItem extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Container(
+                                      width: double.infinity,
                                       constraints: BoxConstraints(
-                                        maxWidth: constraints.maxWidth >= 500
-                                            ? 500
-                                            : constraints.maxWidth,
-                                      ),
+                                          // maxWidth: constraints.maxWidth >= 500
+                                          //     ? 500
+                                          //     : constraints.maxWidth,
+                                          maxWidth: constraints.maxWidth),
                                       child: Text(
                                         data[index].name,
                                         style: monseratTextFont.copyWith(

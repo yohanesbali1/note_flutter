@@ -16,6 +16,8 @@ class PageBloc extends Bloc<PageEvent, PageState> {
         (event, emit) => emit(OnFormTransactionPage(event.transactionModel)));
     on<GoToFormTransactionDetailPage>((event, emit) =>
         emit(OnFormTransactionDetailPage(event.transactiondetailModel)));
+    on<GoToTransactionDetailPage>(
+        (event, emit) => emit(OnTransactionDetailPage(event.transactionModel)));
     on<GoToMainPage>((event, emit) => emit(OnMainPage(
         bottomNavBarIndex: event.bottomNavBarIndex,
         isExpired: event.isExpired)));

@@ -42,6 +42,14 @@ class GoToFormTransactionDetailPage extends PageEvent {
   List<Object> get props => [];
 }
 
+class GoToTransactionDetailPage extends PageEvent {
+  final TransactionModel? transactionModel;
+  @override
+  GoToTransactionDetailPage(this.transactionModel);
+  // TODO: implement props
+  List<Object> get props => [];
+}
+
 class GoToMainPage extends PageEvent {
   final int bottomNavBarIndex;
   final bool isExpired;
