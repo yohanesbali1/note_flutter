@@ -349,7 +349,8 @@ class _FormTransactionState extends State<FormTransaction> {
                                       ? DataNotFound()
                                       : ListTransactionDetailItem(
                                           transaction_detail,
-                                          change_transaction_detail)),
+                                          change_transaction_detail,
+                                          true)),
                             ],
                           ),
                         ),
