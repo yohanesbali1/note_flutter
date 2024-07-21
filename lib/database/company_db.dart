@@ -8,6 +8,7 @@ class CompanyDB {
       "id" INTEGER NOT NULL,
       "name" VARCHAR(99) NOT NULL,
       "address" VARCHAR(99) NOT NULL,
+      "phone" VARCHAR(99) NOT NULL,
       "created_at" INTEGER NOT NULL DEFAULT (cast(strftime('%s', 'now') as INTEGER)),
       "updated_at" INTEGER NOT NULL DEFAULT (cast(strftime('%s', 'now') as INTEGER)),
       PRIMARY KEY("id" AUTOINCREMENT)
@@ -27,24 +28,31 @@ class CompanyDB {
     return todos.map((e) => CompanyModel.fromJson(e)).toList();
   }
 
-  Future<int> create({required String name, required String address}) async {
+  Future<int> create(
+      {required String name,
+      required String address,
+      required String phone}) async {
     final database = await DatabaseService().database;
     return await database.rawInsert(
-        '''INSERT INTO $tablename (name,address,created_at,updated_at) VALUES (?,?,?,?)''',
+        '''INSERT INTO $tablename (name,address,phone,created_at,updated_at) VALUES (?,?,?,?,?)''',
         [
           name,
           address,
+          phone,
           DateTime.now().millisecondsSinceEpoch,
           DateTime.now().millisecondsSinceEpoch
         ]);
   }
 
   Future<int> update(
-      {required int id, required String name, required String address}) async {
+      {required int id,
+      required String name,
+      required String address,
+      required String phone}) async {
     final database = await DatabaseService().database;
     return await database.update(
       tablename,
-      {"name": name, "address": address},
+      {"name": name, "address": address, "phone": phone},
       where: "id = ?",
       conflictAlgorithm: ConflictAlgorithm.rollback,
       whereArgs: [id],

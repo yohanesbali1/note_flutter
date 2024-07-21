@@ -14,8 +14,10 @@ class _ModalCompanyState extends State<ModalCompany> {
   int? id;
   TextEditingController nameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
 
   bool nameValidate = false;
+  bool phoneValidate = false;
   bool addressValidate = false;
 
   @override
@@ -24,6 +26,7 @@ class _ModalCompanyState extends State<ModalCompany> {
     setState(() {
       nameController.text = widget.company?.name ?? "";
       addressController.text = widget.company?.address ?? "";
+      phoneController.text = widget.company?.phone ?? "";
       id = widget.company?.id ?? null;
     });
   }
@@ -81,6 +84,51 @@ class _ModalCompanyState extends State<ModalCompany> {
                                   decoration: InputDecoration(
                                       hintText: 'contoh : Vila Flamboyan',
                                       errorText: nameValidate
+                                          ? 'Data tidak boleh kosong'
+                                          : null,
+                                      hintStyle: monseratTextFont.copyWith(
+                                          color: text3,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 6),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(width: 1, color: text3),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: accColor))),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 12,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Hp. Vila',
+                                  style: monseratTextFont.copyWith(
+                                      color: text2,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                TextFormField(
+                                  controller: phoneController,
+                                  cursorColor: mainColor,
+                                  keyboardType: TextInputType.phone,
+                                  onChanged: (value) => setState(() {
+                                    phoneValidate = phoneController.text == "";
+                                  }),
+                                  style: monseratTextFont.copyWith(
+                                      color: text2,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400),
+                                  decoration: InputDecoration(
+                                      hintText: 'contoh : 08812345678',
+                                      errorText: phoneValidate
                                           ? 'Data tidak boleh kosong'
                                           : null,
                                       hintStyle: monseratTextFont.copyWith(
@@ -171,7 +219,8 @@ class _ModalCompanyState extends State<ModalCompany> {
                                   fontWeight: FontWeight.w500)),
                           onPressed: () async {
                             if (nameController.text == '' ||
-                                addressController.text == '') {
+                                addressController.text == '' ||
+                                phoneController.text == '') {
                               nameController.text == ''
                                   ? setState(() {
                                       nameValidate = true;
@@ -187,11 +236,13 @@ class _ModalCompanyState extends State<ModalCompany> {
                             if (id == null) {
                               await companyDB.create(
                                   name: nameController.text,
+                                  phone: phoneController.text,
                                   address: addressController.text);
                             } else {
                               await companyDB.update(
                                   name: nameController.text,
                                   id: id!,
+                                  phone: phoneController.text,
                                   address: addressController.text);
                             }
                             widget.getData();

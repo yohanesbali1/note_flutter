@@ -26,15 +26,20 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
   @override
   void initState() {
     getData();
+    var qty = '0';
+    var price = '0';
     if (widget.transaction_detail_data != null) {
-      product_value = widget.transaction_detail_data?.product_id ?? 0;
-      qtyController.text =
-          widget.transaction_detail_data?.amount.toString() ?? "";
-      priceController.text =
-          widget.transaction_detail_data?.price.round().toString() ?? "";
-
-      cont_price(qtyController.text, priceController.text);
+      setState(() {
+        product_value = widget.transaction_detail_data!.product_id;
+      });
+      qty = widget.transaction_detail_data!.amount.toString();
+      price = widget.transaction_detail_data!.price.toString();
     }
+    setState(() {
+      qtyController.text = qty;
+      priceController.text = price;
+    });
+    cont_price(qty, price);
   }
 
   void cont_price(qty, price) async {
@@ -97,7 +102,13 @@ class _ModalTransactionDetailState extends State<ModalTransactionDetail> {
                                 ),
                                 DropdownButtonFormField(
                                   onChanged: (newValue) {
+                                    var price = show_product(newValue)
+                                        .price
+                                        .toInt()
+                                        .toString();
+                                    cont_price(qtyController.text, price);
                                     setState(() {
+                                      priceController.text = price;
                                       product_value = newValue;
                                       productValidate = newValue == "";
                                     });

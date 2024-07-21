@@ -10,6 +10,7 @@ class TransacationPage extends StatefulWidget {
 
 class _TransacationPageState extends State<TransacationPage> {
   Future<List<TransactionModel>>? futureTranscation;
+  var count_data = 0;
   final transactionDB = TransactionDB();
   void initState() {
     super.initState();
@@ -72,7 +73,46 @@ class _TransacationPageState extends State<TransacationPage> {
                   ],
                 )),
             Container(
-              margin: EdgeInsets.only(top: 40),
+                margin: EdgeInsets.only(top: 30),
+                width: double.infinity,
+                alignment: Alignment.center,
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: GestureDetector(
+                        onTap: () => {widget.change_site(0)},
+                        child: Container(
+                          child: Text(
+                            'List Data',
+                            style: monseratTextFont.copyWith(
+                                color: textprimary,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
+                        onTap: () => {},
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(color: Colors.red),
+                          child: Image.asset(
+                            "assets/icon/add.png",
+                            width: 3,
+                            height: 3,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
+            Container(
+              margin: EdgeInsets.only(top: 30),
               child: FutureBuilder(
                   future: futureTranscation,
                   builder: (context, snapshot) {

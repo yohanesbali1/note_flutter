@@ -19,14 +19,14 @@ class ListTransactionItem extends StatelessWidget {
             itemCount: data.length,
             itemBuilder: (BuildContext context, int index) => Slidable(
                 endActionPane: ActionPane(
-                    extentRatio: 0.4,
+                    extentRatio: 0.65,
                     motion: const ScrollMotion(),
                     children: [
                       CustomSlidableAction(
                           autoClose: true,
                           padding:
                               EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                          backgroundColor: mainColor,
+                          backgroundColor: bgcolor3,
                           onPressed: (context) {
                             context
                                 .read<PageBloc>()
@@ -35,7 +35,7 @@ class ListTransactionItem extends StatelessWidget {
                           child: Container(
                             width: 25,
                             height: 25,
-                            child: Image.asset('assets/icon/edit.png'),
+                            child: Image.asset('assets/icon/details.png'),
                           )),
                       CustomSlidableAction(
                           autoClose: true,

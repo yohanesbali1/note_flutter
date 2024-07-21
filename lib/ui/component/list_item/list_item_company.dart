@@ -19,7 +19,7 @@ class ListCompanyItem extends StatelessWidget {
             itemCount: data.length,
             itemBuilder: (BuildContext context, int index) => Slidable(
                 endActionPane: ActionPane(
-                    extentRatio: 0.4,
+                    extentRatio: 0.45,
                     motion: const ScrollMotion(),
                     children: [
                       CustomSlidableAction(
@@ -206,6 +206,16 @@ class ListCompanyItem extends StatelessWidget {
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600),
                                       ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      data[index].phone,
+                                      style: monseratTextFont.copyWith(
+                                          color: textprimary,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
                                     ),
                                     SizedBox(
                                       height: 5,

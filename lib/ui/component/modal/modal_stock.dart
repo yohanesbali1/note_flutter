@@ -13,12 +13,15 @@ class _ModalStockState extends State<ModalStock> {
   final productDB = ProductDB();
   int? id;
   TextEditingController nameController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  bool priceValidate = false;
   bool nameValidate = false;
   @override
   void initState() {
     super.initState();
     setState(() {
       nameController.text = widget.product?.name ?? "";
+      priceController.text = widget.product?.price.toString() ?? "";
       id = widget.product?.id ?? null;
     });
   }
@@ -93,7 +96,52 @@ class _ModalStockState extends State<ModalStock> {
                                               width: 1, color: accColor))),
                                 )
                               ],
-                            )
+                            ),
+                            SizedBox(
+                              height: 12,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Harga',
+                                  style: monseratTextFont.copyWith(
+                                      color: text2,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                TextFormField(
+                                  controller: priceController,
+                                  cursorColor: mainColor,
+                                  keyboardType: TextInputType.number,
+                                  onChanged: (value) => setState(() {
+                                    priceValidate = priceController.text == "";
+                                  }),
+                                  style: monseratTextFont.copyWith(
+                                      color: text2,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400),
+                                  decoration: InputDecoration(
+                                      hintText: 'contoh : 10000',
+                                      errorText: priceValidate
+                                          ? 'Data tidak boleh kosong'
+                                          : null,
+                                      hintStyle: monseratTextFont.copyWith(
+                                          color: text3,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 6),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(width: 1, color: text3),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: accColor))),
+                                )
+                              ],
+                            ),
                           ])),
                   Align(
                       alignment: Alignment.bottomCenter,
@@ -125,10 +173,14 @@ class _ModalStockState extends State<ModalStock> {
                               return;
                             }
                             if (id == null) {
-                              await productDB.create(name: nameController.text);
+                              await productDB.create(
+                                  name: nameController.text,
+                                  price: double.parse(priceController.text));
                             } else {
                               await productDB.update(
-                                  name: nameController.text, id: id!);
+                                  name: nameController.text,
+                                  id: id!,
+                                  price: double.parse(priceController.text));
                             }
                             widget.futureProductModel();
                             Navigator.pop(context);

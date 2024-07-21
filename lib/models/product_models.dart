@@ -3,9 +3,11 @@ part of "models.dart";
 class ProductModel {
   final int id;
   final String name;
+  final double price;
 
-  ProductModel({required this.id, required this.name});
+  ProductModel({required this.id, required this.name, required this.price});
   factory ProductModel.fromJson(Map<String, dynamic> json) {
-    return ProductModel(id: json['id'], name: json['name']);
+    return ProductModel(
+        id: json['id'], name: json['name'], price: json['price']);
   }
 }

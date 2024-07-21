@@ -35,7 +35,7 @@ class TransactionDB {
   Future<List<TransactionModel>> getAll() async {
     final database = await DatabaseService().database;
     final todos = await database.rawQuery(
-        '''SELECT $tablename.*,$tablename_company.name as company_name, sum($tablename_join.amount * $tablename_join.price) as totalprice FROM $tablename 
+        '''SELECT $tablename.*,$tablename_company.name as company_name,$tablename_company.address as address,$tablename_company.phone as phone, sum($tablename_join.amount * $tablename_join.price) as totalprice FROM $tablename 
         INNER JOIN $tablename_join ON $tablename.id = $tablename_join.id_transaction
         INNER JOIN $tablename_company ON $tablename.company_id = $tablename_company.id
         GROUP BY $tablename_join.id_transaction

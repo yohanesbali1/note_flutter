@@ -23,7 +23,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
     transaction_detail_data.forEach((element) {
       total = total + (element.price * element.amount);
     });
-    print(total);
     setState(() {
       transaction_detail = transaction_detail_data;
     });
@@ -81,11 +80,16 @@ class _TransactionDetailState extends State<TransactionDetail> {
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: GestureDetector(
-                                  onTap: () => {},
+                                  onTap: () => {
+                                    Helper().export_excel_detail_transaction(
+                                        transaction_detail,
+                                        widget.transaction_model),
+                                  },
                                   child: Container(
                                     width: 26,
                                     height: 26,
-                                    child: Image.asset("assets/icon/add.png"),
+                                    child:
+                                        Image.asset("assets/icon/export.png"),
                                   ),
                                 ),
                               ),
