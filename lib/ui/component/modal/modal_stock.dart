@@ -166,10 +166,18 @@ class _ModalStockState extends State<ModalStock> {
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500)),
                           onPressed: () async {
-                            if (nameController.text == '') {
-                              setState(() {
-                                nameValidate = true;
-                              });
+                            if (nameController.text == '' ||
+                                priceController.text == '') {
+                              nameController.text == ""
+                                  ? setState(() {
+                                      nameValidate = true;
+                                    })
+                                  : null;
+                              priceController.text == ""
+                                  ? setState(() {
+                                      priceValidate = true;
+                                    })
+                                  : null;
                               return;
                             }
                             if (id == null) {

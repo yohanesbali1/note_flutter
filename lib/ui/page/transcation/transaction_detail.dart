@@ -81,15 +81,29 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                 alignment: Alignment.centerRight,
                                 child: GestureDetector(
                                   onTap: () => {
-                                    Helper().export_excel_detail_transaction(
-                                        transaction_detail,
-                                        widget.transaction_model),
+                                    showModalBottomSheet(
+                                      backgroundColor: Colors.transparent,
+                                      context: context,
+                                      isScrollControlled:
+                                          true, // Allow bottom sheet to be scroll controlled
+                                      builder: (BuildContext context) {
+                                        return Padding(
+                                          padding: EdgeInsets.only(
+                                            bottom: MediaQuery.of(context)
+                                                .viewInsets
+                                                .bottom,
+                                          ),
+                                          child: SingleChildScrollView(
+                                              child: SubMenu(transaction_detail,
+                                                  widget.transaction_model)),
+                                        );
+                                      },
+                                    ),
                                   },
                                   child: Container(
                                     width: 26,
                                     height: 26,
-                                    child:
-                                        Image.asset("assets/icon/export.png"),
+                                    child: Image.asset("assets/icon/menu.png"),
                                   ),
                                 ),
                               ),
@@ -204,4 +218,42 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   ),
                 ))));
   }
+
+  Widget SubMenu(transaction_detail, transaction) => Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: bgcolor2,
+      ),
+      padding: const EdgeInsets.only(
+          left: 20.0, right: 20.0, top: 20.0, bottom: 20.0),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                Export().export_excel_detail_transaction(
+                    transaction_detail, widget.transaction_model);
+              },
+              child: Text('Export Data',
+                  style: monseratTextFont.copyWith(
+                      color: textprimary,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500)),
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            GestureDetector(
+              onTap: () {
+                Helper.share_data_transaction_detail(
+                    transaction_detail, widget.transaction_model);
+              },
+              child: Text('Kirim Data',
+                  style: monseratTextFont.copyWith(
+                      color: textprimary,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500)),
+            ),
+          ]));
 }

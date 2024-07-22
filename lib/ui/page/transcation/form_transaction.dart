@@ -263,6 +263,7 @@ class _FormTransactionState extends State<FormTransaction> {
                                                   ),
                                                   TextFormField(
                                                     controller: dateController,
+                                                    readOnly: true,
                                                     onChanged: (value) =>
                                                         setState(() {
                                                       dateValidate =

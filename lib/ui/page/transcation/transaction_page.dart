@@ -60,52 +60,25 @@ class _TransacationPageState extends State<TransacationPage> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
-                        onTap: () => context
-                            .read<PageBloc>()
-                            .add(GoToFormTransactionPage(null)),
+                        onTap: () => showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          isScrollControlled:
+                              true, // Allow bottom sheet to be scroll controlled
+                          builder: (BuildContext context) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom,
+                              ),
+                              child: SingleChildScrollView(child: SubMenu()),
+                            );
+                          },
+                        ),
                         child: Container(
                           width: 26,
                           height: 26,
-                          child: Image.asset("assets/icon/add.png"),
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
-            Container(
-                margin: EdgeInsets.only(top: 30),
-                width: double.infinity,
-                alignment: Alignment.center,
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: GestureDetector(
-                        onTap: () => {widget.change_site(0)},
-                        child: Container(
-                          child: Text(
-                            'List Data',
-                            style: monseratTextFont.copyWith(
-                                color: textprimary,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(
-                        onTap: () => {},
-                        child: Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(color: Colors.red),
-                          child: Image.asset(
-                            "assets/icon/add.png",
-                            width: 3,
-                            height: 3,
-                          ),
+                          child: Image.asset("assets/icon/menu.png"),
                         ),
                       ),
                     ),
@@ -129,4 +102,42 @@ class _TransacationPageState extends State<TransacationPage> {
           ],
         ));
   }
+
+  Widget SubMenu() => Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: bgcolor2,
+      ),
+      padding: const EdgeInsets.only(
+          left: 20.0, right: 20.0, top: 20.0, bottom: 25.0),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                context.read<PageBloc>().add(GoToFormTransactionPage(null));
+                Navigator.pop(context);
+              },
+              child: Text('Tambah Data',
+                  style: monseratTextFont.copyWith(
+                      color: textprimary,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500)),
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            GestureDetector(
+              onTap: () {
+                context.read<PageBloc>().add(GoToFormTransactionPage(null));
+                Navigator.pop(context);
+              },
+              child: Text('Filter Data',
+                  style: monseratTextFont.copyWith(
+                      color: textprimary,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500)),
+            ),
+          ]));
 }

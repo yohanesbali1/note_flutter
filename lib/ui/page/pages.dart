@@ -18,6 +18,7 @@ part 'company_page.dart';
 part 'transcation/transaction_page.dart';
 part 'transcation/form_transaction.dart';
 part 'transcation/transaction_detail.dart';
+part 'transcation/filter_tramsaction.dart';
 // part 'note_page.dart';
 // part 'form_stock_page.dart';
 // part 'form_company_page.dart';
