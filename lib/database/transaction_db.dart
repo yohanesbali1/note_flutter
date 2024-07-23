@@ -43,6 +43,18 @@ class TransactionDB {
     return todos.map((e) => TransactionModel.fromJson(e)).toList();
   }
 
+  Future<List<TransactionModel>> getFilter(
+      int company_id, String start_date, String end_date) async {
+    final database = await DatabaseService().database;
+    final todos = await database.rawQuery(
+        '''SELECT $tablename.*,$tablename_company.name as company_name,$tablename_company.address as address,$tablename_company.phone as phone, sum($tablename_join.amount * $tablename_join.price) as totalprice FROM $tablename 
+        INNER JOIN $tablename_join ON $tablename.id = $tablename_join.id_transaction
+        INNER JOIN $tablename_company ON $tablename.company_id = $tablename_company.id
+        where $tablename.company_id = ${company_id} and $tablename.date between '${start_date}' and '${end_date}' GROUP BY $tablename_join.id_transaction
+     ''');
+    return todos.map((e) => TransactionModel.fromJson(e)).toList();
+  }
+
   Future<List<TransactionModel>> getLimit() async {
     final database = await DatabaseService().database;
     final todos = await database.rawQuery(

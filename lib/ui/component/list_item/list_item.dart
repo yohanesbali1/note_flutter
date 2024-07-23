@@ -12,3 +12,4 @@ part 'list_item_stock.dart';
 part 'list_item_company.dart';
 part 'list_item_transaction.dart';
 part 'list_item_transaction_detail.dart';
+part 'list_item_filter_transaction.dart';

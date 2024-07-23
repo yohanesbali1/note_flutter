@@ -21,7 +21,7 @@ class OnFormStockPage extends PageState {
   @override
   OnFormStockPage(this.productModel);
   // TODO: implement props
-  List<Object> get props => [];
+  List<Object> get props => [productModel ?? ""];
 }
 
 class OnFormCompanyPage extends PageState {
@@ -29,7 +29,7 @@ class OnFormCompanyPage extends PageState {
   @override
   OnFormCompanyPage(this.companyModel);
   // TODO: implement props
-  List<Object> get props => [];
+  List<Object> get props => [companyModel ?? ""];
 }
 
 class OnFormTransactionPage extends PageState {
@@ -37,7 +37,7 @@ class OnFormTransactionPage extends PageState {
   @override
   OnFormTransactionPage(this.transactionModel);
   // TODO: implement props
-  List<Object> get props => [];
+  List<Object> get props => [transactionModel ?? ""];
 }
 
 class OnFormTransactionDetailPage extends PageState {
@@ -45,7 +45,7 @@ class OnFormTransactionDetailPage extends PageState {
   @override
   OnFormTransactionDetailPage(this.transactiondetailModel);
   // TODO: implement props
-  List<Object> get props => [];
+  List<Object> get props => [transactiondetailModel ?? ""];
 }
 
 class OnTransactionDetailPage extends PageState {
@@ -53,7 +53,7 @@ class OnTransactionDetailPage extends PageState {
   @override
   OnTransactionDetailPage(this.transactionModel);
   // TODO: implement props
-  List<Object> get props => [];
+  List<Object> get props => [transactionModel ?? ""];
 }
 
 class OnMainPage extends PageState {
@@ -63,4 +63,19 @@ class OnMainPage extends PageState {
   @override
   // TODO: implement props
   List<Object> get props => [bottomNavBarIndex, isExpired];
+}
+
+class OnFormFilterPage extends PageState {
+  OnFormFilterPage();
+  @override
+  // TODO: implement props
+  List<Object> get props => [];
+}
+
+class OnFilterPage extends PageState {
+  final search_form;
+  OnFilterPage(this.search_form);
+  @override
+  // TODO: implement props
+  List<Object> get props => [];
 }

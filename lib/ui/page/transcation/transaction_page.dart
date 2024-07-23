@@ -130,7 +130,7 @@ class _TransacationPageState extends State<TransacationPage> {
             ),
             GestureDetector(
               onTap: () {
-                context.read<PageBloc>().add(GoToFormTransactionPage(null));
+                context.read<PageBloc>().add(GoToFormFilterPage());
                 Navigator.pop(context);
               },
               child: Text('Filter Data',

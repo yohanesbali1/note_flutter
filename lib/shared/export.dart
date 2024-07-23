@@ -72,7 +72,70 @@ class Export {
     } else {
       _directory = await getApplicationDocumentsDirectory();
     }
-    String filePath = '${_directory.path}/example.xlsx';
+    String filePath = '${_directory.path}/transaction_detail.xlsx';
+    final File file = File(filePath);
+    await file.writeAsBytes(bytes, flush: true);
+    final exPath = _directory.path;
+    await Directory(exPath).create(recursive: true);
+    workbook.dispose();
+  }
+
+  Future<void> export_excel_transaction(transcation) async {
+    final Workbook workbook = Workbook();
+    final Worksheet sheet = workbook.worksheets[0];
+    final List<Style> styles = createStyles(workbook);
+
+    sheet.getRangeByName('A1').columnWidth = 1.69;
+    sheet.getRangeByName('B1').text = transcation![0].company_name;
+    sheet.getRangeByName('B1:E1').cellStyle = styles[0];
+
+    sheet.getRangeByName('B2').text = transcation![0].address;
+    sheet.getRangeByName('B3').text = transcation![0].phone;
+    sheet.getRangeByName('B3:E3').cellStyle = styles[10];
+
+    double total = 0.00;
+
+    sheet.getRangeByName('B6').text = 'Tanggal';
+    sheet.getRangeByName('C6').text = 'Sub Harga';
+    sheet.getRangeByName('B6:C6').cellStyle = styles[1];
+
+    for (var i = 0; i < transcation.length; i++) {
+      final item = transcation[i];
+      total = total + double.parse(item.totalprice.toString());
+      sheet.getRangeByName('B${i + 7}').setText(item.date);
+      sheet.getRangeByName('B${i + 7}').cellStyle.wrapText = true;
+      sheet
+          .getRangeByName('C${i + 7}')
+          .setText(Helper.convertToIdr(item.totalprice, 2));
+      sheet.getRangeByName('B${i + 7}:C${i + 7}').cellStyle = styles[2];
+    }
+
+    sheet.getRangeByName('B${transcation.length + 7}').text = 'Total';
+    sheet.getRangeByName('C${transcation.length + 7}').text =
+        Helper.convertToIdr(total, 2);
+    sheet
+        .getRangeByName('B${transcation.length + 7}:C${transcation.length + 7}')
+        .cellStyle = styles[4];
+    sheet.autoFitColumn(2);
+    sheet.autoFitColumn(3);
+    sheet.autoFitColumn(4);
+    sheet.autoFitColumn(5);
+
+// Save and dispose workbook.
+    final List<int> bytes = workbook.saveAsStream();
+    var status = await Permission.storage.status;
+    if (!status.isGranted) {
+      // If not we will ask for permission first
+      await Permission.storage.request();
+    }
+    Directory _directory = Directory("");
+    if (Platform.isAndroid) {
+      // Redirects it to download folder in android
+      _directory = Directory("/storage/emulated/0/Download");
+    } else {
+      _directory = await getApplicationDocumentsDirectory();
+    }
+    String filePath = '${_directory.path}/transaction.xlsx';
     final File file = File(filePath);
     await file.writeAsBytes(bytes, flush: true);
     final exPath = _directory.path;

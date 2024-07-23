@@ -13,6 +13,10 @@ class Wrapper extends StatelessWidget {
                     ? FormTransaction(pageState.transactionModel)
                     : (pageState is OnTransactionDetailPage)
                         ? TransactionDetail(pageState.transactionModel)
-                        : Container());
+                        : (pageState is OnFormFilterPage)
+                            ? FormFilterTransaction()
+                            : (pageState is OnFilterPage)
+                                ? FilterTransaction(pageState.search_form)
+                                : Container());
   }
 }

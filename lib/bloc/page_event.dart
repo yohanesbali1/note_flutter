@@ -15,7 +15,7 @@ class GoToFormStockPage extends PageEvent {
   @override
   GoToFormStockPage(this.productModel);
   // TODO: implement props
-  List<Object> get props => [];
+  List<Object> get props => [productModel ?? ""];
 }
 
 class GoToFormCompanyPage extends PageEvent {
@@ -23,7 +23,7 @@ class GoToFormCompanyPage extends PageEvent {
   @override
   GoToFormCompanyPage(this.companyModel);
   // TODO: implement props
-  List<Object> get props => [];
+  List<Object> get props => [companyModel ?? ""];
 }
 
 class GoToFormTransactionPage extends PageEvent {
@@ -31,7 +31,7 @@ class GoToFormTransactionPage extends PageEvent {
   @override
   GoToFormTransactionPage(this.transactionModel);
   // TODO: implement props
-  List<Object> get props => [];
+  List<Object> get props => [transactionModel ?? ""];
 }
 
 class GoToFormTransactionDetailPage extends PageEvent {
@@ -39,7 +39,7 @@ class GoToFormTransactionDetailPage extends PageEvent {
   @override
   GoToFormTransactionDetailPage(this.transactiondetailModel);
   // TODO: implement props
-  List<Object> get props => [];
+  List<Object> get props => [transactiondetailModel ?? ""];
 }
 
 class GoToTransactionDetailPage extends PageEvent {
@@ -47,7 +47,7 @@ class GoToTransactionDetailPage extends PageEvent {
   @override
   GoToTransactionDetailPage(this.transactionModel);
   // TODO: implement props
-  List<Object> get props => [];
+  List<Object> get props => [transactionModel ?? ""];
 }
 
 class GoToMainPage extends PageEvent {
@@ -57,4 +57,19 @@ class GoToMainPage extends PageEvent {
   GoToMainPage({this.bottomNavBarIndex = 0, this.isExpired = false});
   // TODO: implement props
   List<Object> get props => [bottomNavBarIndex, isExpired];
+}
+
+class GoToFormFilterPage extends PageEvent {
+  @override
+  GoToFormFilterPage();
+  // TODO: implement props
+  List<Object> get props => [];
+}
+
+class GoToFilterPage extends PageEvent {
+  final search_form;
+  @override
+  GoToFilterPage(this.search_form);
+  // TODO: implement props
+  List<Object> get props => [search_form];
 }

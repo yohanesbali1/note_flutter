@@ -21,5 +21,7 @@ class PageBloc extends Bloc<PageEvent, PageState> {
     on<GoToMainPage>((event, emit) => emit(OnMainPage(
         bottomNavBarIndex: event.bottomNavBarIndex,
         isExpired: event.isExpired)));
+    on<GoToFormFilterPage>((event, emit) => emit(OnFormFilterPage()));
+    on<GoToFilterPage>((event, emit) => emit(OnFilterPage(event.search_form)));
   }
 }
