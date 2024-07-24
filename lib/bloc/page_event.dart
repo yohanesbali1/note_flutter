@@ -52,11 +52,10 @@ class GoToTransactionDetailPage extends PageEvent {
 
 class GoToMainPage extends PageEvent {
   final int bottomNavBarIndex;
-  final bool isExpired;
   @override
-  GoToMainPage({this.bottomNavBarIndex = 0, this.isExpired = false});
+  GoToMainPage({this.bottomNavBarIndex = 0});
   // TODO: implement props
-  List<Object> get props => [bottomNavBarIndex, isExpired];
+  List<Object> get props => [bottomNavBarIndex];
 }
 
 class GoToFormFilterPage extends PageEvent {

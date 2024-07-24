@@ -12,6 +12,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
   final transactionDB = TransactionDB();
   List<TransactionDetailModel> transaction_detail = [];
   double total = 0.00;
+  DateFormat dateFormat = DateFormat('dd MMMM yyyy', 'id_ID');
   void initState() {
     super.initState();
     getData();
@@ -54,10 +55,10 @@ class _TransactionDetailState extends State<TransactionDetail> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: GestureDetector(
-                                  onTap: () => context.read<PageBloc>().add(
-                                      GoToMainPage(
-                                          bottomNavBarIndex: 3,
-                                          isExpired: false)),
+                                  onTap: () =>
+                                      context.read<PageBloc>().add(GoToMainPage(
+                                            bottomNavBarIndex: 3,
+                                          )),
                                   child: Container(
                                     width: 26,
                                     height: 26,
@@ -162,7 +163,10 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                       SizedBox(
                                         height: 6,
                                       ),
-                                      Text(widget.transaction_model!.date ?? '',
+                                      Text(
+                                          dateFormat.format(DateTime.parse(
+                                              widget.transaction_model!.date ??
+                                                  '')),
                                           textAlign: TextAlign.left,
                                           style: monseratTextFont.copyWith(
                                               color: textprimary,
@@ -246,7 +250,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
             ),
             GestureDetector(
               onTap: () {
-                Helper.share_data_transaction_detail(
+                ShareMedia.share_data_transaction_detail(
                     transaction_detail, widget.transaction_model);
               },
               child: Text('Kirim Data',

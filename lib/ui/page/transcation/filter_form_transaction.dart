@@ -57,10 +57,11 @@ class _FormFilterTransactionState extends State<FormFilterTransaction> {
                                   Align(
                                     alignment: Alignment.centerLeft,
                                     child: GestureDetector(
-                                      onTap: () => context.read<PageBloc>().add(
-                                          GoToMainPage(
-                                              bottomNavBarIndex: 3,
-                                              isExpired: false)),
+                                      onTap: () => context
+                                          .read<PageBloc>()
+                                          .add(GoToMainPage(
+                                            bottomNavBarIndex: 3,
+                                          )),
                                       child: Container(
                                         width: 26,
                                         height: 26,

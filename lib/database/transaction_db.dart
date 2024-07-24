@@ -55,6 +55,31 @@ class TransactionDB {
     return todos.map((e) => TransactionModel.fromJson(e)).toList();
   }
 
+  Future<List<TransactionModel>> getThisMonth() async {
+    final database = await DatabaseService().database;
+    final todos = await database.rawQuery('''SELECT 
+    t.*, 
+    c.name AS company_name, 
+    c.address AS address, 
+    c.phone AS phone, 
+    SUM(j.amount * j.price) AS totalprice 
+FROM 
+    $tablename t
+    INNER JOIN $tablename_join j ON t.id = j.id_transaction
+    INNER JOIN $tablename_company c ON t.company_id = c.id
+WHERE 
+strftime('%m', t.date) = strftime('%m', 'now') 
+    AND strftime('%Y', t.date) = strftime('%Y', 'now')
+
+
+GROUP BY 
+    t.id, c.name, c.address, c.phone
+
+    Order by t.date desc
+     ''');
+    return todos.map((e) => TransactionModel.fromJson(e)).toList();
+  }
+
   Future<List<TransactionModel>> getLimit() async {
     final database = await DatabaseService().database;
     final todos = await database.rawQuery(

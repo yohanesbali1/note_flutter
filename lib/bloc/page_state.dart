@@ -58,11 +58,10 @@ class OnTransactionDetailPage extends PageState {
 
 class OnMainPage extends PageState {
   final int bottomNavBarIndex;
-  final bool isExpired;
-  OnMainPage({this.bottomNavBarIndex = 0, this.isExpired = false});
+  OnMainPage({this.bottomNavBarIndex = 0});
   @override
   // TODO: implement props
-  List<Object> get props => [bottomNavBarIndex, isExpired];
+  List<Object> get props => [bottomNavBarIndex];
 }
 
 class OnFormFilterPage extends PageState {

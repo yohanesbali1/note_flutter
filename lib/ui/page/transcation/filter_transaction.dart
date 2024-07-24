@@ -182,7 +182,7 @@ class _FilterTransactionState extends State<FilterTransaction> {
             ),
             GestureDetector(
               onTap: () {
-                Helper.share_data_transaction(futureTranscation);
+                ShareMedia.share_data_transaction(futureTranscation);
                 Navigator.pop(context);
               },
               child: Text('Share Data',

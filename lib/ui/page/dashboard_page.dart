@@ -9,17 +9,30 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  Future<List<TransactionModel>>? futureTranscation;
+  List<TransactionModel> futureTranscation = [];
+  List<ProductModel> futureProduct = [];
   final transactionDB = TransactionDB();
+  final productDB = ProductDB();
   void initState() {
     super.initState();
     getData();
   }
 
   Future<void> getData() async {
+    var data_transaction = await transactionDB.getThisMonth();
+    var data_product = await productDB.getAll();
     setState(() {
-      futureTranscation = transactionDB.getLimit();
+      futureTranscation = data_transaction;
+      futureProduct = data_product;
     });
+  }
+
+  String formatNumber(int number) {
+    if (number >= 1000) {
+      return '${(number / 1000).toStringAsFixed(1)}K';
+    } else {
+      return number.toString();
+    }
   }
 
   @override
@@ -81,7 +94,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             height: 5,
                           ),
                           Text(
-                            '24',
+                            formatNumber(futureProduct.length),
                             style: monseratTextFont.copyWith(
                                 color: textprimary,
                                 fontSize: 20,
@@ -94,7 +107,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 16),
-                  width: 125,
+                  width: 200,
                   padding: EdgeInsets.symmetric(vertical: 14, horizontal: 10),
                   decoration: BoxDecoration(
                       color: bgcolor2,
@@ -118,7 +131,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Transaksi',
+                            'Transaksi Bulan Ini',
                             style: monseratTextFont.copyWith(
                                 color: text3,
                                 fontSize: 14,
@@ -128,7 +141,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             height: 5,
                           ),
                           Text(
-                            '24',
+                            formatNumber(futureTranscation.length),
                             style: monseratTextFont.copyWith(
                                 color: textprimary,
                                 fontSize: 20,
@@ -144,12 +157,12 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           Container(
             width: double.infinity,
-            margin: const EdgeInsets.only(top: 32, bottom: 15),
+            margin: const EdgeInsets.only(top: 32),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Penginputan Terakhir",
+                  "Transaksi Bulan Ini",
                   style: monseratTextFont.copyWith(
                     color: textprimary,
                     fontWeight: FontWeight.w600,
@@ -171,20 +184,11 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 40, bottom: 30),
-            child: FutureBuilder(
-                future: futureTranscation,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else {
-                    final data = snapshot.data ?? [];
-                    return data.isEmpty
-                        ? DataNotFound()
-                        : ListTransactionItem(data, getData, transactionDB);
-                  }
-                }),
-          )
+              margin: EdgeInsets.only(top: 20, bottom: 30),
+              child: futureTranscation.isEmpty
+                  ? DataNotFound()
+                  : ListTransactionItem(
+                      futureTranscation, getData, transactionDB, 5))
         ],
       ),
     );

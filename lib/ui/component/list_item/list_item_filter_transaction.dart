@@ -6,6 +6,8 @@ class ListFilterTransactionItem extends StatelessWidget {
   final transactionDB;
   ListFilterTransactionItem(this.data, this.getData, this.transactionDB);
 
+  DateFormat dateFormat = DateFormat('dd MMMM yyyy', 'id_ID');
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -201,7 +203,8 @@ class ListFilterTransactionItem extends StatelessWidget {
                               height: 5,
                             ),
                             Text(
-                              data[index].date,
+                              dateFormat
+                                  .format(DateTime.parse(data[index].date)),
                               style: monseratTextFont.copyWith(
                                   color: textprimary,
                                   fontSize: 14,

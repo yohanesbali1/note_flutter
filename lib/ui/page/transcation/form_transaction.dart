@@ -89,9 +89,7 @@ class _FormTransactionState extends State<FormTransaction> {
                                     alignment: Alignment.centerLeft,
                                     child: GestureDetector(
                                       onTap: () => context.read<PageBloc>().add(
-                                          GoToMainPage(
-                                              bottomNavBarIndex: 3,
-                                              isExpired: false)),
+                                          GoToMainPage(bottomNavBarIndex: 3)),
                                       child: Container(
                                         width: 26,
                                         height: 26,

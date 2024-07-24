@@ -3,8 +3,19 @@ part of 'list_item.dart';
 class ListTransactionItem extends StatelessWidget {
   final data;
   final getData;
+  var status = "";
   final transactionDB;
-  ListTransactionItem(this.data, this.getData, this.transactionDB);
+  final limit;
+  ListTransactionItem(this.data, this.getData, this.transactionDB, this.limit);
+
+  DateFormat dateFormat = DateFormat('dd MMMM yyyy', 'id_ID');
+  Future<void> deleteData(context, id) async {
+    var res = await Helper().alert(context, 'delete', null);
+    if (res) {
+      await transactionDB.delete(id: id);
+      getData();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +27,7 @@ class ListTransactionItem extends StatelessWidget {
           child: ListView.separated(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: data.length,
+            itemCount: data.length > 0 && limit is bool ? limit : data.length,
             itemBuilder: (BuildContext context, int index) => Slidable(
                 endActionPane: ActionPane(
                     extentRatio: 0.65,
@@ -58,118 +69,7 @@ class ListTransactionItem extends StatelessWidget {
                           backgroundColor:
                               const Color.fromARGB(255, 197, 65, 55),
                           onPressed: (context) {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                    contentPadding: EdgeInsets.all(0),
-                                    content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 20, horizontal: 30),
-                                            decoration: BoxDecoration(
-                                                color: bgcolor,
-                                                borderRadius:
-                                                    BorderRadius.circular(20)),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  width: 60,
-                                                  height: 60,
-                                                  padding: EdgeInsets.all(13),
-                                                  decoration: BoxDecoration(
-                                                      color: mainColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              100)),
-                                                  child: Image.asset(
-                                                      'assets/icon/warning.png'),
-                                                ),
-                                                SizedBox(
-                                                  height: 17,
-                                                ),
-                                                Text('Apakah anda yakin ?',
-                                                    textAlign: TextAlign.center,
-                                                    style: monseratTextFont
-                                                        .copyWith(
-                                                            fontSize: 16,
-                                                            color: text2,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w600)),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(
-                                                  'Data akan terhapus secara permanen!',
-                                                  textAlign: TextAlign.center,
-                                                  style:
-                                                      monseratTextFont.copyWith(
-                                                    fontSize: 14,
-                                                    color: text3,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 28,
-                                                ),
-                                                Align(
-                                                    alignment:
-                                                        Alignment.bottomCenter,
-                                                    child: SizedBox(
-                                                      width: double.infinity,
-                                                      child: ElevatedButton(
-                                                        style: ButtonStyle(
-                                                            backgroundColor:
-                                                                MaterialStateProperty
-                                                                    .all(
-                                                                        mainColor),
-                                                            shape: MaterialStateProperty
-                                                                .all<
-                                                                    RoundedRectangleBorder>(
-                                                              RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                              ),
-                                                            ),
-                                                            padding:
-                                                                MaterialStateProperty
-                                                                    .all<
-                                                                        EdgeInsets>(
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  vertical: 10),
-                                                            )),
-                                                        child: Text(
-                                                            'Hapus Data',
-                                                            style: monseratTextFont.copyWith(
-                                                                color:
-                                                                    textprimary,
-                                                                fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600)),
-                                                        onPressed: () async {
-                                                          await transactionDB
-                                                              .delete(
-                                                                  id: data[
-                                                                          index]
-                                                                      .id);
-                                                          getData();
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                      ),
-                                                    ))
-                                              ],
-                                            ),
-                                          )
-                                        ])));
+                            deleteData(context, data[index].id);
                           },
                           child: Container(
                             width: 25,
@@ -201,7 +101,8 @@ class ListTransactionItem extends StatelessWidget {
                               height: 5,
                             ),
                             Text(
-                              data[index].date,
+                              dateFormat
+                                  .format(DateTime.parse(data[index].date)),
                               style: monseratTextFont.copyWith(
                                   color: textprimary,
                                   fontSize: 14,

@@ -1,4 +1,9 @@
-part of 'shared.dart';
+import 'dart:io';
+
+import 'package:nota/shared/shared.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 
 class Export {
   Future<void> export_excel_detail_transaction(detail, transcation) async {

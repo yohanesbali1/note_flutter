@@ -1,15 +1,6 @@
 part of 'shared.dart';
 
-class Helper {
-  static String convertToIdr(dynamic number, int decimalDigit) {
-    NumberFormat currencyFormatter = NumberFormat.currency(
-      locale: 'id',
-      symbol: 'Rp ',
-      decimalDigits: decimalDigit,
-    );
-    return currencyFormatter.format(number);
-  }
-
+class ShareMedia {
   static void alert(status, message) {}
   static void share_data_transaction_detail(
       data_transaction_detail, data_transaction) async {
@@ -31,13 +22,13 @@ class Helper {
       qty += element.amount;
       chat += '${element.product_name}\n';
       chat +=
-          'Jumlah: ${element.amount.toString()}, Harga: ${convertToIdr(element.price, 2).toString()} \n';
+          'Jumlah: ${element.amount.toString()}, Harga: ${Helper.convertToIdr(element.price, 2).toString()} \n';
       chat +=
-          'Sub Harga: ${convertToIdr((element.amount * element.price), 2).toString()} \n\n';
+          'Sub Harga: ${Helper.convertToIdr((element.amount * element.price), 2).toString()} \n\n';
     });
     chat += '======================\n';
     chat += 'Total Barang: ${qty}\n';
-    chat += 'Total Harga: ${convertToIdr(total, 2).toString()}\n\n\n';
+    chat += 'Total Harga: ${Helper.convertToIdr(total, 2).toString()}\n\n\n';
 
     chat += 'Terima Kasih';
 
@@ -62,10 +53,11 @@ class Helper {
       DateFormat dateFormat = DateFormat('dd-MM-yyyy', 'id_ID');
       total = total + double.parse(element.totalprice.toString());
       chat += '${dateFormat.format(DateTime.parse(element.date))}         ';
-      chat += ' ${convertToIdr((element.totalprice), 0).toString()} \n\n';
+      chat +=
+          ' ${Helper.convertToIdr((element.totalprice), 0).toString()} \n\n';
     });
     chat += '======================\n';
-    chat += 'Total: ${convertToIdr(total, 0).toString()}\n\n\n';
+    chat += 'Total: ${Helper.convertToIdr(total, 0).toString()}\n\n\n';
 
     chat += 'Terima Kasih';
 

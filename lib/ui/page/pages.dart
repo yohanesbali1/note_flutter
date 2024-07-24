@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:nota/bloc/bloc.dart';
 import 'package:nota/database/database.dart';
 import 'package:nota/models/models.dart';
+import 'package:nota/shared/export.dart';
 import 'package:nota/shared/shared.dart';
 import 'package:nota/ui/component/list_item/list_item.dart';
 import 'package:nota/ui/component/modal/modal.dart';

@@ -95,7 +95,8 @@ class _TransacationPageState extends State<TransacationPage> {
                       final data = snapshot.data ?? [];
                       return data.isEmpty
                           ? DataNotFound()
-                          : ListTransactionItem(data, getData, transactionDB);
+                          : ListTransactionItem(
+                              data, getData, transactionDB, null);
                     }
                   }),
             )
