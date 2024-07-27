@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:nota/bloc/bloc.dart';
-import 'package:nota/database/database.dart';
-import 'package:nota/models/models.dart';
 import 'package:nota/shared/shared.dart';
 import 'package:nota/ui/component/modal/modal.dart';
 

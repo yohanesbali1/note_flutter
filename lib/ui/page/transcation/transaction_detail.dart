@@ -235,9 +235,10 @@ class _TransactionDetailState extends State<TransactionDetail> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             GestureDetector(
-              onTap: () {
-                Export().export_excel_detail_transaction(
+              onTap: () async {
+                await Export().export_excel_detail_transaction(
                     transaction_detail, widget.transaction_model);
+                Helper().alert(context, 'success', null);
               },
               child: Text('Export Data',
                   style: monseratTextFont.copyWith(

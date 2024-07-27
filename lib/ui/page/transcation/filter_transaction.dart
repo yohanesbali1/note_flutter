@@ -169,7 +169,7 @@ class _FilterTransactionState extends State<FilterTransaction> {
             GestureDetector(
               onTap: () {
                 Export().export_excel_transaction(futureTranscation);
-                Navigator.pop(context);
+                Helper().alert(context, 'success', null);
               },
               child: Text('Export Data',
                   style: monseratTextFont.copyWith(
@@ -183,7 +183,6 @@ class _FilterTransactionState extends State<FilterTransaction> {
             GestureDetector(
               onTap: () {
                 ShareMedia.share_data_transaction(futureTranscation);
-                Navigator.pop(context);
               },
               child: Text('Share Data',
                   style: monseratTextFont.copyWith(
